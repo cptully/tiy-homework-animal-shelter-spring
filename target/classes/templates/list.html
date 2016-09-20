@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Animal List</title>
+</head>
+<body>
+    <!--/*@thymesVar id="jokes" type="java.util.List<Joke>"*/-->
+    <!--/*@thymesVar id="joke" type="com.theironyard.entity.Joke"*/-->
+    <dl th:each="joke : ${ jokes }">
+        <dt th:text="${joke.joke}">
+            This is a joke
+        </dt>
+        <dd th:text="${joke.punchline}">
+            This is a punchline
+        </dd>
+    </dl>
+</body>
+</html>
