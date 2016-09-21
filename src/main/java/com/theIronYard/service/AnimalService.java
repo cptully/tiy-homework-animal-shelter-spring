@@ -1,8 +1,8 @@
 package com.theIronYard.service;
 
-import com.theIronYard.repository.AnimalBreedRepository;
+import com.theIronYard.repository.BreedRepository;
 import com.theIronYard.repository.AnimalRepository;
-import com.theIronYard.repository.AnimalTypeRepository;
+import com.theIronYard.repository.TypeRepository;
 import com.theIronYard.repository.NoteRepository;
 
 /**
@@ -11,8 +11,8 @@ import com.theIronYard.repository.NoteRepository;
 public class AnimalService {
     // properties
     private AnimalRepository animalRepository;
-    private AnimalBreedRepository animalBreedRepository;
-    private AnimalTypeRepository animalTypeRepository;
+    private BreedRepository breedRepository;
+    private TypeRepository typeRepository;
     private NoteRepository noteRepository;
 
     /**
@@ -21,12 +21,12 @@ public class AnimalService {
      * @param animalRepository an AnimalRepository object
      */
     public AnimalService(AnimalRepository animalRepository,
-                         AnimalTypeRepository animalTypeRepository,
-                         AnimalBreedRepository animalBreedRepository,
+                         TypeRepository typeRepository,
+                         BreedRepository breedRepository,
                          NoteRepository noteRepository) {
         this.animalRepository = animalRepository;
-        this.animalBreedRepository = animalBreedRepository;
-        this.animalTypeRepository = animalTypeRepository;
+        this.breedRepository = breedRepository;
+        this.typeRepository = typeRepository;
         this.noteRepository = noteRepository;
     }
 

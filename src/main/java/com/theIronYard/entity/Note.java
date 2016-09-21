@@ -3,7 +3,7 @@ package com.theIronYard.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
@@ -18,15 +18,18 @@ public class Note {
 
 //    private Integer animal_id;
     private String content;
-    private LocalDateTime date;
+    private LocalDate date;
 //    private Animal animal;
+
+    public Note() {
+    }
 
     public Note(String content) {
         this.content = content;
-        this.date = LocalDateTime.now();
+        this.date = LocalDate.now();
     }
 
-    public Note(Integer id, String content, LocalDateTime date) {
+    public Note(Integer id, String content, LocalDate date) {
         this.id = id;
         this.content = content;
         this.date = date;
@@ -44,7 +47,7 @@ public class Note {
 
     public void setContent(String content) {this.content = content;}
 
-    public LocalDateTime getDate() {return date;}
+    public LocalDate getDate() {return date;}
 
     public String getFormattedDate() {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM d yyyy");
