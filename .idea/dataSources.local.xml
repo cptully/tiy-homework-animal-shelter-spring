@@ -2,11 +2,16 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="PostgreSQL - animalshelter@localhost" uuid="ce51fc92-8cfe-4a66-bf00-7efa01ff0e4e">
+      <database-info product="PostgreSQL" version="9.5.4" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.4 JDBC4 (build 1201)">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <introspection-scope>animalshelter:pg_catalog,public</introspection-scope>
       <resolve-scope>animalshelter:public</resolve-scope>
     </data-source>
     <data-source name="PostgreSQL - animalrepository_test@localhost" uuid="ee2ed01f-fbd0-4d4a-b53a-0413cd2600ac">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
       <secret-storage>master_key</secret-storage>
       <introspection-scope>animalrepository_test:pg_catalog,public</introspection-scope>
       <resolve-scope>animalrepository_test:public</resolve-scope>
