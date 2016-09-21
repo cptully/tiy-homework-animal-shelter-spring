@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Animal Shelter</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" th:href="@{css/styles.css}" href="../static/css/styles.css" />
 </head>
 <body>
 <h1>Chris, Dave and Jeff's Animal Shelter</h1>
@@ -68,15 +68,15 @@
     <!--/*@thymesVar id="animals" type="java.util.List<Animal>"*/-->
     <!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
      <div class="animal" th:each="animal : ${animals}">
-        <img src="images/captainmycaptain.jpg" />
+        <img th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg" />
 
         <div class="detail">
             <a href="animalForm" th:text="${animal.getName()}">animal name</a><br/>
-            <strong>Type:</strong> <span th:text="${animal.getType().getTypeName()}">Cat</span><br/>
-            <strong>Breed:</strong> Calico<br/>
-            <strong>Color:</strong> Grey<br/>
-            <strong>Description:</strong> skittish but like to chase laser pointers<br/>
-            <strong>Notes:</strong> <a href="animalNotes">3 notes</a><br/>
+            <strong>Type:</strong> <span th:text="${animal.type.name}">Cat</span><br/>
+            <strong>Breed:</strong> <span th:text="${animal.breed.name}">Calico</span><br/>
+            <strong>Color:</strong> <span th:text="${animal.color}">Grey</span><br/>
+            <strong>Description:</strong> <span th:text="${animal.description}">skittish but like to chase laser pointers</span><br/>
+            <strong>Notes:</strong> <a th:href="@{/animalNotes}" href="animalNotes" th:text="${animal.notes.count} notes">3 notes</a><br/>
         </div>
     </div>
 

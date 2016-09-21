@@ -16,9 +16,10 @@ public class Note {
     @GeneratedValue
     private Integer id;
 
-    private Integer animalId;
+//    private Integer animal_id;
     private String content;
     private LocalDateTime date;
+//    private Animal animal;
 
     public Note(String content) {
         this.content = content;
@@ -35,9 +36,9 @@ public class Note {
 
     public void setId(int id) {this.id = id;}
 
-    public int getAnimalId() {return animalId;}
-
-    public void setAnimalId(Integer animalId) {this.animalId = animalId;}
+//    public int getAnimal_id() {return animal_id;}
+//
+//    public void setAnimal_id(Integer animal_id) {this.animal_id = animal_id;}
 
     public String getContent() {return content;}
 
