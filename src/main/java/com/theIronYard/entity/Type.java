@@ -24,43 +24,21 @@ public class Type {
         this.id = 0;
         this.name = "";
     }
-    public Type(String name) {
-        this.name = name;
-    }
 
-    public Integer getTypeId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setTypeId(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getTypeName() {
+    public String getName() {
         return name;
     }
 
-    public void setTypeName(String name) {
+    public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Type that = (Type) o;
-
-        if (getTypeId() != that.getTypeId()) return false;
-        return getTypeName().equals(that.getTypeName());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getTypeId();
-        result = 31 * result + getTypeName().hashCode();
-        return result;
     }
 
     @Override
