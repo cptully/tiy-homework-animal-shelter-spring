@@ -2,6 +2,7 @@ package com.theIronYard.controller;
 
 import com.theIronYard.entity.Animal;
 import com.theIronYard.entity.Breed;
+import com.theIronYard.entity.Note;
 import com.theIronYard.entity.Type;
 import com.theIronYard.repository.AnimalRepository;
 import com.theIronYard.repository.BreedRepository;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by chris on 9/20/16.
@@ -49,18 +51,22 @@ public class AnimalShelterController {
         List<Type> types = typeRepository.findAll();
         Animal animal;
         List<Breed> breeds;
+        Set<Note> notes;
 
         if (id != null) {
             animal = animalRepository.getOne(id);
             breeds = breedRepository.findByTypeName(animal.getBreed().getType().getName());
+            notes = animal.getNotes();
         } else {
             animal = new Animal();
             breeds = breedRepository.findAll();
+            notes = null;
         }
 
         model.addAttribute("animal", animal);
         model.addAttribute("types", types);
         model.addAttribute("breeds", breeds);
+        model.addAttribute("notes", notes);
         return "addAnimal";
     }
 

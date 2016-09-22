@@ -38,7 +38,7 @@
         </label>
         <select name="typeId" id="typeId" th:each="type : ${types}">
             <option>select...</option>
-            <option th:value="${type.id}" th:text="${type.name}" th:selected="${animal.breed.type == type}">Cat</option>
+            <option th:value="${type.id}" th:text="${type.name}" th:selected="${animal.breed.type == type}">dog</option>
         </select>
     </div>
     <div>
@@ -47,8 +47,7 @@
             </label>
             <select name="breedId" id="breedId" th:each="breed : ${breeds}">
                 <option>select...</option>
-                <option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed.name == breed.name}">Tabby</option>
-            <!--<option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed == breed ? true : false}">Tabby</option>-->
+                <option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed.name == breed.name}">mutt</option>
         </select>
     </div>
     <div>
@@ -72,28 +71,12 @@
                 <th>Date</th>
                 <th>Note</th>
             </tr>
-            <tr>
-                <td>
+            <tr th:each="Note note : ${notes}">
+                <td th:text="${note.getFormattedDate}">
                     1/1/2012
                 </td>
-                <td>
+                <td th:text="${note.content}">
                     Myst has been eating more food than usual and loosing weight.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    1/20/2012
-                </td>
-                <td>
-                    Myst has cancer of the tounge.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    2/12/2012
-                </td>
-                <td>
-                    Myst was put down because he could no longer move around on his own.
                 </td>
             </tr>
         </table>
