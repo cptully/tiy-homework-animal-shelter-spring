@@ -1,5 +1,7 @@
 package com.theIronYard.controller;
 
+import com.sun.tools.javac.comp.Todo;
+import com.sun.xml.internal.bind.v2.TODO;
 import com.theIronYard.entity.Animal;
 import com.theIronYard.entity.Breed;
 import com.theIronYard.entity.Note;
@@ -108,4 +110,12 @@ public class AnimalShelterController {
         }
         return "breed";
     }
+
+    // TODO: 9/22/16 addBreed method
+
+    // TODO: 9/22/16 add & delete methods for type
+
+    // TODO: 9/22/16 add, edit & delete methods for note
+
+    // TODO: 9/22/16 how much code to move out to animalService?
 }

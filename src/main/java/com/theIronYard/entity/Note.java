@@ -78,7 +78,7 @@ public class Note {
 
     @Override
     public String toString() {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
         return id + "\t" + dateTimeFormatter.format(date) + "\t" + content;
     }
 }

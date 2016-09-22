@@ -63,16 +63,18 @@
         <input type="text" name="description" id="description" placeholder="description" th:value="${animal != null ? animal.description : ''}" />
     </div>
     <div id="notes-block">
-        <label name="notes-block">
+        <label for="notes-table">
             <strong>Notes</strong>
         </label>
-        <table>
+        <table id="notes-table">
             <tr>
                 <th>Date</th>
                 <th>Note</th>
             </tr>
-            <tr th:each="Note note : ${notes}">
-                <td th:text="${note.getFormattedDate}">
+            <!--/*@thymesVar id="notes" type="java.util.Set<Note>"*/-->
+            <!--/*@thymesVar id="note" type="com.theIronYard.entity.Note"*/-->
+            <tr th:each="note : ${notes}">
+                <td th:text="${note.getFormattedDate()}">
                     1/1/2012
                 </td>
                 <td th:text="${note.content}">
