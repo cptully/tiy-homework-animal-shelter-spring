@@ -38,7 +38,7 @@
         </label>
         <select name="typeId" id="typeId" th:each="type : ${types}">
             <option>select...</option>
-            <option th:value="${type.id}" th:text="${type.name}" th:selected="${animal != null ? ${animal.type.name == type.name ? true : false} : false}">Cat</option>
+            <option th:value="${type.id}" th:text="${type.name}" th:selected="${animal.breed.type == type}">Cat</option>
         </select>
     </div>
     <div>
@@ -47,7 +47,7 @@
             </label>
             <select name="breedId" id="breedId" th:each="breed : ${breeds}">
                 <option>select...</option>
-                <option value="${breed.id}" th:text="${breed.name}" th:selected="${animal != null ? ${animal.breed.name == breed.name ? true : false} : false}">Tabby</option>
+                <option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed.name == breed.name}">Tabby</option>
             <!--<option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed == breed ? true : false}">Tabby</option>-->
         </select>
     </div>

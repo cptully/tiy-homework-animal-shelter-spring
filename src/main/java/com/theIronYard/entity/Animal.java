@@ -95,7 +95,7 @@ public class Animal {
 
     @Override
     public String toString() {
-       return this.id + "\t" + this.name + "\t" + "\t" + this.breed.getName() + "\t" + this.color;
+       return this.id + "\t" + this.name + "\t" + this.breed.getName() + "\t" + this.color;
     }
 
     /**

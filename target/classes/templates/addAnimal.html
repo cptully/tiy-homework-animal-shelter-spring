@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add / Edit Animal</title>
     <link rel="stylesheet" th:href="@{css/styles.css}" href="../static/css/styles.css" />
-=======
-<<html xmlns:th="http://www.thymeleaf.org">
->
-<head>
-    <title>Add / Edit Animal</title>
-    <link rel="stylesheet" href= "css/styles.css"/>
->>>>>>> 3d7d796880d792a05139f3f9ba920df62bff35b6
 </head>
 <body>
 
@@ -18,11 +10,7 @@
 
 <nav>
     <ul>
-<<<<<<< HEAD
         <li><a href="list.html" th:href="@{/}">List Animals</a></li>
-=======
-        <li><a href="list.html" th:href="@{list}">List Animals</a></li>
->>>>>>> 3d7d796880d792a05139f3f9ba920df62bff35b6
         <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
         <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
         <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
@@ -39,23 +27,18 @@
         <label for="name">
             <strong>Name:</strong> <span class="required">*</span>
         </label>
-<<<<<<< HEAD
         <!--/*@thymesVar id="animals" type="java.util.List<Animal>"*/-->
         <!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
         <input type="text" name="name" id="name" placeholder="name" value="Myst" th:value="${animal != null ? animal.name : ''}" />
-=======
-        <input type="text" name="name" id="name" placeholder="name" value="Myst">
->>>>>>> 3d7d796880d792a05139f3f9ba920df62bff35b6
     </div>
 
     <div>
         <label for="typeId">
             <strong>Type:</strong> <span class="required">*</span>
         </label>
-<<<<<<< HEAD
         <select name="typeId" id="typeId" th:each="type : ${types}">
             <option>select...</option>
-            <option th:value="${type.id}" th:text="${type.name}" th:selected="${animal != null ? ${animal.type.name == type.name ? true : false} : false}">Cat</option>
+            <option th:value="${type.id}" th:text="${type.name}" th:selected="${animal.breed.type == type}">Cat</option>
         </select>
     </div>
     <div>
@@ -64,49 +47,21 @@
             </label>
             <select name="breedId" id="breedId" th:each="breed : ${breeds}">
                 <option>select...</option>
-                <option value="${breed.id}" th:text="${breed.name}" th:selected="${animal != null ? ${animal.breed.name == breed.name ? true : false} : false}">Tabby</option>
+                <option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed.name == breed.name}">Tabby</option>
             <!--<option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed == breed ? true : false}">Tabby</option>-->
         </select>
     </div>
-=======
-        <select name="typeId" id="typeId">
-            <option>select...</option>
-            <option value="0" selected="true">Cat</option>
-            <option value="1">Dog</option>
-            <option value="2">Lizard</option>
-            <option value="3">Horse</option>
-        </select>
-    </div>
-    <label for="breedId">
-        <strong>Breed:</strong>
-    </label>
-    <select name="breedId" id="breedId">
-        <option>select...</option>
-        <option value="0">Calico</option>
-        <option value="0" selected="true">Tabby</option>
-        <option value="0">Mixed</option>
-    </select>
->>>>>>> 3d7d796880d792a05139f3f9ba920df62bff35b6
     <div>
         <label for="color">
             <strong>Color:</strong>
         </label>
-<<<<<<< HEAD
         <input type="text" name="color" id="color" placeholder="color" th:value="${animal != null ? animal.color : ''}" />
-=======
-        <input type="text" name="color" id="color" placeholder="color" value="grey">
->>>>>>> 3d7d796880d792a05139f3f9ba920df62bff35b6
     </div>
     <div>
         <label for="description">
             <strong>Description:</strong>
         </label>
-<<<<<<< HEAD
         <input type="text" name="description" id="description" placeholder="description" th:value="${animal != null ? animal.description : ''}" />
-=======
-        <input type="text" name="description" id="description" placeholder="description" value="skittish but like to chase laser pointers"><br/>
-    </div>
->>>>>>> 3d7d796880d792a05139f3f9ba920df62bff35b6
     </div>
     <div id="notes-block">
         <label name="notes-block">
@@ -148,11 +103,7 @@
         <button>Delete Animal</button>
     </div>
 </form>
-<<<<<<< HEAD
 <img id="mainImage" src="../static/images/captainmycaptain.jpg" />
-=======
-<img id="mainImage" src="images/captainmycaptain.jpg" />
->>>>>>> 3d7d796880d792a05139f3f9ba920df62bff35b6
 
 </body>
 </html>
