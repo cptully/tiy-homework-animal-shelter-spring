@@ -18,7 +18,7 @@ public class Animal {
     private String description;
     private String color;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Breed breed;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

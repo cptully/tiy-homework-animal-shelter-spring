@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Animal Shelter</title>
@@ -8,10 +9,10 @@
 
 <nav>
     <ul>
-        <li><a href="animalList">List Animals</a></li>
-        <li><a href="animalAddForm">Add an Animal</a></li>
-        <li><a href="animalType">Manage Animal Types</a></li>
-        <li><a href="animalBreed">Manage Animal Breeds</a></li>
+        <li><a href="list.html" th:href="@{/}">List Animals</a></li>
+        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
     </ul>
 </nav>
 
@@ -71,7 +72,7 @@
         <img th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg" />
 
         <div class="detail">
-            <a href="animalForm" th:text="${animal.getName()}">animal name</a><br/>
+            <a href="addAnimal.html" th:href="@{addAnimal(id=${animal.id})}" th:text="${animal.getName()}">animal name</a><br/>
             <strong>Type:</strong> <span th:text="${animal.breed.type.name}">Cat</span><br/>
             <strong>Breed:</strong> <span th:text="${animal.breed.name}">Calico</span><br/>
             <strong>Color:</strong> <span th:text="${animal.color}">Grey</span><br/>
