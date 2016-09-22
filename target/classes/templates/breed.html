@@ -1,0 +1,76 @@
+<html>
+<head>
+    <title>Manage Animal Breeds</title>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<h1>Chris, Dave and Jeff's Animal Shelter</h1>
+<nav>
+    <ul>
+        <li><a href="animalList.html">List Animals</a></li>
+        <li><a href="animalAddForm.html">Add an Animal</a></li>
+        <li><a href="type.html">Manage Animal Types</a> </li>
+    </ul>
+</nav>
+
+<h2>Manage Animal Breeds</h2>
+
+<table>
+    <tr>
+        <th>Breed</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>
+            Calico
+        </td>
+        <td>
+            delete link
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Tabby
+        </td>
+        <td>
+            delete link
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Mixed
+        </td>
+        <td>
+            delete link
+        </td>
+    </tr>
+</table>
+
+<form>
+    <div>
+        <label for="breedName">
+            <strong>Breed:</strong>
+        </label>
+        <input type="text" name="breedName" id="breedName" placeholder="Breed name">
+    </div>
+    <div>
+        <label for="typeId">
+            <strong>Type:</strong> <span class="required">*</span>
+        </label>
+        <select name="typeId" id="typeId">
+            <option>select...</option>
+            <option value="0">Cat</option>
+            <option value="1">Dog</option>
+            <option value="2">Lizard</option>
+            <option value="3">Horse</option>
+        </select>
+
+    </div>
+    <div class="buttonbar">
+        <button>Add Animal Breed</button>
+    </div>
+</form>
+
+
+</body>
+</html>
