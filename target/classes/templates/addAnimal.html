@@ -1,4 +1,5 @@
-<html>
+<<html xmlns:th="http://www.thymeleaf.org">
+>
 <head>
     <title>Add / Edit Animal</title>
     <link rel="stylesheet" href= "css/styles.css"/>
@@ -9,10 +10,10 @@
 
 <nav>
     <ul>
-        <li><a href="animalList.html">List Animals</a></li>
-        <li><a href="animalAddForm.html">Add an Animal</a></li>
-        <li><a href="type.html">Manage Animal Types</a></li>
-        <li><a href="breed.html">Manage Animal Breeds</a></li>
+        <li><a href="list.html" th:href="@{list}">List Animals</a></li>
+        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
     </ul>
 </nav>
 

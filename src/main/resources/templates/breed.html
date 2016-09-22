@@ -7,9 +7,9 @@
 <h1>Chris, Dave and Jeff's Animal Shelter</h1>
 <nav>
     <ul>
-        <li><a href="list.html">List Animals</a></li>
-        <li><a href="addAnimal.html">Add an Animal</a></li>
-        <li><a href="type.html">Manage Animal Types</a> </li>
+        <li><a href="list.html" th:href="@{list}">List Animals</a></li>
+        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{breed}">Manage Animal Types</a> </li>
     </ul>
 </nav>
 
@@ -25,7 +25,7 @@
             Calico
         </td>
         <td>
-            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${type.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
         </td>
     </tr>
     <tr>
@@ -33,7 +33,7 @@
             Tabby
         </td>
         <td>
-            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${type.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
         </td>
     </tr>
     <tr>
