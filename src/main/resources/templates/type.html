@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Manage Animal Types</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link th:href="@{css/styles.css}" href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -27,7 +27,7 @@
             Cat
         </td>
         <td>
-            Delete link
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
         </td>
     </tr>
     <tr>
@@ -35,7 +35,7 @@
             Dog
         </td>
         <td>
-            Delete link
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
         </td>
     </tr>
     <tr>
@@ -43,7 +43,7 @@
             Lizard
         </td>
         <td>
-            Delete link
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
         </td>
     </tr>
     <tr>
@@ -51,7 +51,7 @@
             Horse
         </td>
         <td>
-            Delete link
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
         </td>
     </tr>
 </table>
