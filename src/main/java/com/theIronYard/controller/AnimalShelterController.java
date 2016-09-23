@@ -98,6 +98,13 @@ public class AnimalShelterController {
         return "breed";
     }
 
+    @RequestMapping(path = "type", method = RequestMethod.GET)
+    public String type(Model model) {
+        List<Type> types =  typeRepository.findAll();
+        model.addAttribute("type", types);
+        return "type";
+    }
+
     @RequestMapping(path = "breed", method = RequestMethod.POST)
     public String deleteBreed(Model model, @RequestParam(defaultValue = "") Integer id) {
         Breed breed = breedRepository.findOne(id);
