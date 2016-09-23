@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add / Edit Animal</title>
-    <link rel="stylesheet" th:href="@{css/styles.css}" href="../static/css/styles.css" />
+    <link rel="stylesheet" th:href="@{css/styles.css}" href="../static/css/styles.css"/>
 </head>
 <body>
 
@@ -11,56 +11,66 @@
 <nav>
     <ul>
         <li><a href="list.html" th:href="@{/}">List Animals</a></li>
-        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
-        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
-        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+        <li><a href="addAnimal.html" th:href="@{/addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{/type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{/breed}">Manage Animal Breeds</a></li>
     </ul>
 </nav>
 
-<h2> Add / Edit an Animal</h2>
+<h2 th:text="${param.id != null ? 'Edit an Animal' : 'Add an Animal' }"> Add / Edit an Animal</h2>
 
 
 <p><span class="required">*</span> indicates a required field</p>
 
-<form>
+<!-- <form id="gizmo-form" role="form" th:action="@{/save}" method="post" th:object="${gizmo}"> -->
+<form id="animal-form" role="form" th:action="@{/addAnimal}" method="post">
     <div>
         <label for="name">
             <strong>Name:</strong> <span class="required">*</span>
         </label>
         <!--/*@thymesVar id="animals" type="java.util.List<Animal>"*/-->
         <!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
-        <input type="text" name="name" id="name" placeholder="name" value="Myst" th:value="${animal != null ? animal.name : ''}" />
+        <input type="text" name="name" id="name" placeholder="name" value="Myst" th:value="${animal != null ? animal.name : ''}"/>
     </div>
 
     <div>
         <label for="typeId">
             <strong>Type:</strong> <span class="required">*</span>
         </label>
+        <!--/*@thymesVar id="types" type="java.util.List<Type>"*/-->
+        <!--/*@thymesVar id="type" type="com.theIronYard.entity.Type"*/-->
         <select name="typeId" id="typeId" th:each="type : ${types}">
             <option>select...</option>
             <option th:value="${type.id}" th:text="${type.name}" th:selected="${animal.breed.type == type}">dog</option>
         </select>
     </div>
     <div>
-            <label for="breedId">
-                <strong>Breed:</strong>
-            </label>
-            <select name="breedId" id="breedId" th:each="breed : ${breeds}">
-                <option>select...</option>
-                <option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed.name == breed.name}">mutt</option>
+        <label for="breedId">
+            <strong>Breed:</strong>
+        </label>
+        <!--/*@thymesVar id="breeds" type="java.util.List<Breed>"*/-->
+        <!--/*@thymesVar id="breed" type="com.theIronYard.entity.Breed"*/-->
+        <select name="breedId" id="breedId" th:each="breed : ${breeds}">
+            <option>select...</option>
+            <option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed.name == breed.name}">mutt
+            </option>
         </select>
     </div>
     <div>
         <label for="color">
             <strong>Color:</strong>
         </label>
-        <input type="text" name="color" id="color" placeholder="color" th:value="${animal != null ? animal.color : ''}" />
+        <!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
+        <input type="text" name="color" id="color" placeholder="color"
+               th:value="${animal != null ? animal.color : ''}"/>
     </div>
     <div>
         <label for="description">
             <strong>Description:</strong>
         </label>
-        <input type="text" name="description" id="description" placeholder="description" th:value="${animal != null ? animal.description : ''}" />
+        <!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
+        <input type="text" name="description" id="description" placeholder="description"
+               th:value="${animal != null ? animal.description : ''}"/>
     </div>
     <div id="notes-block">
         <label for="notes-table">
@@ -83,12 +93,12 @@
             </tr>
         </table>
     </div>
-    <div class="buttonbar">
-        <button>Save Animal</button>
-        <button>Delete Animal</button>
-    </div>
+<!--    <div class="buttonbar">  -->
+        <button type="submit">Save Animal</button>
+<!--        <button>Delete Animal</button>
+    </div>  -->
 </form>
-<img id="mainImage" src="../static/images/captainmycaptain.jpg" />
+<img id="mainImage" th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg"/>
 
 </body>
 </html>

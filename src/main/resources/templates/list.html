@@ -10,14 +10,14 @@
 <nav>
     <ul>
         <li><a href="list.html" th:href="@{/}">List Animals</a></li>
-        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
-        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
-        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+        <li><a href="addAnimal.html" th:href="@{/addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{/type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{/breed}">Manage Animal Breeds</a></li>
     </ul>
 </nav>
 
 <H2>List Animals</H2>
-<form>
+<form id="search" action="/" method="post">
     <h3>Search for an Animal:</h3>
     <div>
         <label for="name">
@@ -59,8 +59,7 @@
         <input type="text" name="animalid" id="animalid" placeholder="ID" />
     </div>
 
-    <button>Search</button>
-
+    <button type="submit" name="search" value="search">Search</button>
 </form>
 
 
@@ -68,7 +67,7 @@
 <section>
     <!--/*@thymesVar id="animals" type="java.util.List<Animal>"*/-->
     <!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
-     <div class="animal" th:each="animal : ${animals}">
+    <div class="animal" th:each="animal : ${animals}">
         <img th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg" />
 
         <div class="detail">

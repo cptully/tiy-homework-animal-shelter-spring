@@ -88,15 +88,19 @@ form {
     float: left;
 }
 
-form div {
+#search {
+    padding-bottom: 1em;
+}
+
+#search div {
     display: inline-block;
 }
 
-form div label {
+#search div label {
     display: block;
 }
 
-form input[type="text"] {
+#search input[type="text"] {
     width: 200px;
     margin-right: 2em;
 }
