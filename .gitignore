@@ -1,0 +1,5 @@
+$ cat .gitignore
+
+# Ignore specific files
+.idea/workspace.xml
+

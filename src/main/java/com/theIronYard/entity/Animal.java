@@ -18,7 +18,7 @@ public class Animal {
     private String description;
     private String color;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Breed breed;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -95,7 +95,7 @@ public class Animal {
 
     @Override
     public String toString() {
-       return this.id + "\t" + this.name + "\t" + "\t" + this.breed.getName() + "\t" + this.color;
+       return this.id + "\t" + this.name + "\t" + this.breed.getName() + "\t" + this.color;
     }
 
     /**

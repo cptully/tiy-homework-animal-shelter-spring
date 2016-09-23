@@ -1,16 +1,31 @@
+<<<<<<< HEAD
 <html>
 <head>
     <title>Manage Animal Types</title>
     <link rel="stylesheet" href="css/styles.css" />
+=======
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Animal Types</title>
+    <link th:href="@{css/styles.css}" href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
+>>>>>>> master
 </head>
 <body>
 
 <h1>Chris, Dave and Jeff's Animal Shelter</h1>
 <nav>
     <ul>
+<<<<<<< HEAD
         <li><a href="animalList.html">List Animals</a></li>
         <li><a href="animalAddForm.html">Add an Animal</a></li>
         <li><a href="breed.html">Manage Animal Breeds</a></li>
+=======
+        <li><a href="list.html" th:href="@{/}">List Animals</a></li>
+        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+>>>>>>> master
     </ul>
 </nav>
 
@@ -25,7 +40,11 @@
             Cat
         </td>
         <td>
+<<<<<<< HEAD
             Delete link
+=======
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
+>>>>>>> master
         </td>
     </tr>
     <tr>
@@ -33,7 +52,11 @@
             Dog
         </td>
         <td>
+<<<<<<< HEAD
             Delete link
+=======
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
+>>>>>>> master
         </td>
     </tr>
     <tr>
@@ -41,7 +64,11 @@
             Lizard
         </td>
         <td>
+<<<<<<< HEAD
             Delete link
+=======
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
+>>>>>>> master
         </td>
     </tr>
     <tr>
@@ -49,7 +76,11 @@
             Horse
         </td>
         <td>
+<<<<<<< HEAD
             Delete link
+=======
+            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
+>>>>>>> master
         </td>
     </tr>
 </table>
