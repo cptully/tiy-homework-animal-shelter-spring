@@ -22,49 +22,25 @@
         <th>Type</th>
         <th></th>
     </tr>
-    <tr>
-        <td>
-            Cat
-        </td>
+    <tr th:each="type : ${types}">
+
+        <td th:text="${type.name}">Cat</td>
         <td>
             <button class="delete-btn">
-                <a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}">
-                    <img class="delete-btn" th:src="images/delete.jpg" src="../static/images/delete.jpeg">
+                <a th:href="@{/deleteType?typeId=${type.getTypeId()}">
+                    <img class="delete-btn" th:src="@{images/delete.jpg}" src="../static/images/delete.jpeg">
                 </a>
             </button>
         </td>
     </tr>
-    <tr>
-        <td>
-            Dog
-        </td>
-        <td>
-            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Lizard
-        </td>
-        <td>
-            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Horse
-        </td>
-        <td>
-            <button class="delete-btn"><a th:href="@{/deleteType?(typeId=${animalType.getTypeId()}"><img class="delete-btn" src="../static/images/delete.jpeg"></a></button>
-        </td>
-    </tr>
 </table>
+
 <form>
     <div>
         <label for="typeName">
             <strong>Type:</strong>
         </label>
-        <input type="text" name="typeName" id="typeName" placeholder="Type name">
+        <input type="text" name="typeName" id="typeName" placeholder="Type name"/>
     </div>
 
     <div class="buttonbar">
