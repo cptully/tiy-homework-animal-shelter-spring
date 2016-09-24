@@ -146,3 +146,7 @@ form {
 .delete-btn{
     width: 20px;
 }
+
+#animal-form{
+    width: 30%;
+}

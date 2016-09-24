@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Animal Types</title>
+    <link th:href="@{css/styles.css}" href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<h1>Chris, Dave and Jeff's Animal Shelter</h1>
+<nav>
+    <ul>
+        <li><a href="list.html" th:href="@{/}">List Animals</a></li>
+        <li><a href="addAnimal.html" th:href="@{/addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{/type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{/breed}">Manage Animal Breeds</a></li>
+    </ul>
+</nav>
+
+<h2>Manage Animal Types</h2>
+<table>
+    <tr>
+        <th>Type</th>
+        <th></th>
+    </tr>
+    <tr th:each="type : ${types}">
+
+        <td th:text="${type.name}">Cat</td>
+        <td>
+            <button class="delete-btn">
+                <a th:href="@{/deleteType?typeId=${type.getTypeId()}">
+                    <img class="delete-btn" th:src="@{images/delete.jpg}" src="../static/images/delete.jpeg">
+                </a>
+            </button>
+        </td>
+    </tr>
+</table>
+
+<form>
+    <div>
+        <label for="typeName">
+            <strong>Type:</strong>
+        </label>
+        <input type="text" name="typeName" id="typeName" placeholder="Type name"/>
+    </div>
+
+    <div class="buttonbar">
+        <button>Add Animal Type</button>
+    </div>
+</form>
+</body>
+</html>

@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 .idea/*
 *.iml
 target/
 out/
 **/.DS_Store
+=======
+$ cat .gitignore
+
+# Ignore specific files
+.idea/workspace.xml
+
+>>>>>>> origin/jeff

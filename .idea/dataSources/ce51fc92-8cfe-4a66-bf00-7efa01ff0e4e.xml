@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="PostgreSQL - animalshelter@localhost">
   <database-model serializer="dbm" rdbms="POSTGRES" format-version="2.6">
-    <database id="1" name="animalshelter">
-      <object-id>41175</object-id>
-      <visible>1</visible>
-    </database>
-    <database id="2" name="postgres">
+    <database id="1" name="postgres">
       <object-id>12641</object-id>
     </database>
-    <database id="3" name="chris">
+    <database id="2" name="chris">
       <object-id>16385</object-id>
     </database>
-    <database id="4" name="people">
+    <database id="3" name="people">
       <object-id>16386</object-id>
+    </database>
+    <database id="4" name="animalshelter">
+      <object-id>41175</object-id>
+      <visible>1</visible>
     </database>
     <database id="5" name="example">
       <object-id>16524</object-id>
@@ -38,25 +38,25 @@
     <database id="12" name="jokes">
       <object-id>41156</object-id>
     </database>
-    <schema id="13" parent="1" name="public">
+    <schema id="13" parent="4" name="public">
       <object-id>2200</object-id>
       <visible>1</visible>
-      <introspection-state-number>2350</introspection-state-number>
-      <introspection-timestamp>2016-09-21.14:22:57.764</introspection-timestamp>
+      <introspection-state-number>2361</introspection-state-number>
+      <introspection-timestamp>2016-09-23.21:53:27.830</introspection-timestamp>
     </schema>
-    <schema id="14" parent="1" name="pg_catalog">
+    <schema id="14" parent="4" name="pg_catalog">
       <object-id>11</object-id>
     </schema>
-    <schema id="15" parent="1" name="pg_toast">
+    <schema id="15" parent="4" name="pg_toast">
       <object-id>99</object-id>
     </schema>
-    <schema id="16" parent="1" name="pg_temp_1">
+    <schema id="16" parent="4" name="pg_temp_1">
       <object-id>11816</object-id>
     </schema>
-    <schema id="17" parent="1" name="pg_toast_temp_1">
+    <schema id="17" parent="4" name="pg_toast_temp_1">
       <object-id>11817</object-id>
     </schema>
-    <schema id="18" parent="1" name="information_schema">
+    <schema id="18" parent="4" name="information_schema">
       <object-id>12349</object-id>
     </schema>
     <sequence id="19" parent="13" name="hibernate_sequence">
@@ -65,15 +65,15 @@
     </sequence>
     <table id="20" parent="13" name="animal">
       <object-id>41610</object-id>
-      <state-number>2350</state-number>
+      <state-number>2361</state-number>
     </table>
     <table id="21" parent="13" name="breed">
       <object-id>41618</object-id>
       <state-number>2349</state-number>
     </table>
     <table id="22" parent="13" name="note">
-      <object-id>41623</object-id>
-      <state-number>2350</state-number>
+      <object-id>41652</object-id>
+      <state-number>2361</state-number>
     </table>
     <table id="23" parent="13" name="type">
       <object-id>41631</object-id>
@@ -152,36 +152,36 @@
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
     <column id="38" parent="22" name="id">
-      <state-number>2346</state-number>
+      <state-number>2360</state-number>
       <mandatory>1</mandatory>
       <data-type>integer|0</data-type>
     </column>
     <column id="39" parent="22" name="content">
-      <state-number>2346</state-number>
+      <state-number>2360</state-number>
       <data-type>varchar(255)|0</data-type>
     </column>
     <column id="40" parent="22" name="date">
-      <state-number>2346</state-number>
-      <data-type>bytea|0</data-type>
+      <state-number>2360</state-number>
+      <data-type>date|0</data-type>
     </column>
     <column id="41" parent="22" name="animal_id">
-      <state-number>2346</state-number>
+      <state-number>2360</state-number>
       <data-type>integer|0</data-type>
     </column>
     <index id="42" parent="22" name="note_pkey">
-      <object-id>41629</object-id>
+      <object-id>41655</object-id>
       <columns>id</columns>
       <desc-columns></desc-columns>
       <unique>1</unique>
     </index>
     <key id="43" parent="22" name="note_pkey">
-      <object-id>41630</object-id>
+      <object-id>41656</object-id>
       <columns>id</columns>
       <underlying-index>note_pkey</underlying-index>
       <primary>1</primary>
     </key>
     <foreign-key id="44" parent="22" name="fkaro2ok22aqw0go52grtagv2fd">
-      <object-id>41646</object-id>
+      <object-id>41657</object-id>
       <columns>animal_id</columns>
       <ref-key>~.animal.animal_pkey</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>

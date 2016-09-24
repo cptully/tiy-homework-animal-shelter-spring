@@ -1,7 +1,5 @@
 package com.theIronYard.controller;
 
-import com.sun.tools.javac.comp.Todo;
-import com.sun.xml.internal.bind.v2.TODO;
 import com.theIronYard.entity.Animal;
 import com.theIronYard.entity.Breed;
 import com.theIronYard.entity.Note;
@@ -44,7 +42,7 @@ public class AnimalShelterController {
     public String list(Model model) {
         List<Animal> animals =  animalRepository.findAll();
         model.addAttribute("animals", animals);
-        return "/list";
+        return "list";
     }
 
     @RequestMapping(path = "/addAnimal", method = RequestMethod.GET)
@@ -68,17 +66,16 @@ public class AnimalShelterController {
         model.addAttribute("types", types);
         model.addAttribute("breeds", breeds);
         model.addAttribute("notes", notes);
-        return "/addAnimal";
+        return "addAnimal";
     }
 
-    @RequestMapping(path = "/save", method = RequestMethod.POST)
-    public String save(Model model,
-                            @RequestParam Integer id,
-                            @RequestParam String name,
-                            @RequestParam Integer typeId,
-                            @RequestParam Integer breedId,
-                            @RequestParam String color,
-                            @RequestParam String description) {
+    @RequestMapping(path = "/saveAnimal", method = RequestMethod.POST)
+    public String save(@RequestParam Integer id,
+                       @RequestParam String name,
+                       @RequestParam Integer typeId,
+                       @RequestParam Integer breedId,
+                       @RequestParam String color,
+                       @RequestParam String description) {
         Breed breed = breedRepository.getOne(breedId);
         Type type = typeRepository.getOne(typeId);
         // TODO: 9/22/16 if type and breed don't match we have a problem - ignored for now
@@ -91,26 +88,26 @@ public class AnimalShelterController {
         }
         animalRepository.save(animal);
 
-        return "/list";
+        return "list";
     }
 
     @RequestMapping(path = "/breed", method = RequestMethod.GET)
     public String breed(Model model) {
         List<Breed> breeds =  breedRepository.findAll();
         model.addAttribute("breeds", breeds);
-        return "/breed";
+        return "breed";
     }
 
 
-    @RequestMapping(path = "/breed", method = RequestMethod.POST)
-    public String deleteBreed(Model model, @RequestParam(defaultValue = "") Integer id) {
+    @RequestMapping(path = "/deleteBreed", method = RequestMethod.POST)
+    public String deleteBreed(@RequestParam Integer id) {
         Breed breed = breedRepository.findOne(id);
         if(animalRepository.findByBreed(id).size() == 0) {
             breedRepository.deleteById(id);
         } else {
-
+            // TODO: 9/23/16 Add error message about deleting breed that is in use
         }
-        return "/breed";
+        return "breed";
     }
 
     // TODO: 9/22/16 addBreed method
@@ -120,9 +117,19 @@ public class AnimalShelterController {
     public String type(Model model) {
         List<Type> types =  typeRepository.findAll();
         model.addAttribute("types", types);
-        return "/type";
+        return "type";
     }
 
+    @RequestMapping(path = "/deleteType", method = RequestMethod.POST)
+    public String deleteType(@RequestParam Integer id) {
+        Type type = typeRepository.findOne(id);
+        if(animalRepository.findByBreed(id).size() == 0) {
+            typeRepository.deleteById(id);
+        } else {
+            // TODO: 9/23/16 Add error message about deleting breed that is in use
+        }
+        return "type";
+    }
     // TODO: 9/22/16 add, edit & delete methods for note
 
     // TODO: 9/22/16 how much code to move out to animalService?
