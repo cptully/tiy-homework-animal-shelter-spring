@@ -141,4 +141,13 @@ form input[type="text"] {
 
 .delete-btn{
     width: 20px;
+
+    display: inline;
+    padding: 0px;
+    border: 0px;
+    font-family: Futura, Tahoma, sans-serif;
+    font-size: medium;
+    color: #ffffff;
+    border-radius: 5px 5px;
+    background-color: bisque;
 }

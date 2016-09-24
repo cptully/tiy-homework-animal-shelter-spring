@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 <!DOCTYPE html>
->>>>>>> master
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Animal Notes</title>
@@ -13,28 +10,17 @@
 <h1>Chris, Dave and Jeff's Animal Shelter</h1>
 <nav>
     <ul>
-<<<<<<< HEAD
         <li><a th:href="@{list}" href="list.html">List Animals</a></li>
         <li><a th:href="@{addAnimal}" href="addAnimal.html">Add an Animal</a></li>
         <li><a th:href="@{type}" href="type.html">Manage Animal Types</a></li>
         <li><a th:href="@{breed}" href="breed.html">Manage Animal Breeds</a></li>
-=======
-        <li><a href="list.html" th:href="@{/}">List Animals</a></li>
-        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
-        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
-        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
->>>>>>> master
     </ul>
 </nav>
 
 <h2>Animal Notes</h2>
 
 <div class="animal">
-<<<<<<< HEAD
     <img th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg" />
-=======
-    <img src="../static/images/captainmycaptain.jpg" />
->>>>>>> master
 
     <div class="detail">
         <strong>Name:</strong> Myst<br/>
@@ -70,7 +56,7 @@
             Myst has cancer of the tounge.
         </td>
         <td>
-            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${static/images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
+            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
         </td>
     </tr>
     <tr>
@@ -81,7 +67,7 @@
             Myst was put down because he could no longer move around on his own.
         </td>
         <td>
-            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${static/images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
+            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
         </td>
     </tr>
 </table>
