@@ -24,13 +24,13 @@
 
 <p><span class="required">*</span> indicates a required field</p>
 
-<form id="addAnimalForm" action="addAnimal.html" th:action="@{/saveAnimal}" method="post">
+<form id="addAnimalForm" role="form" action="addAnimal.html" th:action="@{/saveAnimal}" method="post" th:object="${animal}">
     <input type="hidden" name="id" id="id" th:value="${animal != null ? animal.id : -1}" />
     <div>
         <label for="name">
             <strong>Name:</strong> <span class="required">*</span>
         </label>
-        <input type="text" name="name" id="name" placeholder="name" value="Myst" th:value="${animal != null ? animal.name : ''}" />
+        <input type="text" id="name" name="name" placeholder="name" value="Myst" th:value="${animal != null ? animal.name : ''}" th:field="${animal.name}" />
     </div>
 
     <div>
@@ -49,22 +49,25 @@
         <label for="breedId">
             <strong>Breed:</strong>
         </label>
-        <select name="breedId" id="breedId" th:each="breed : ${breeds}">
+        <select name="breedId" id="breedId">
             <option>select...</option>
-            <option value="${breed.id}" th:text="${breed.name}" th:selected="${animal.breed == breed}">Tabby</option>
+            <option th:each="breed : ${breeds}"
+                    th:value="${breed.id}"
+                    th:text="${breed.name}"
+                    th:selected="${animal.breed == breed}">Tabby</option>
         </select>
     </div>
     <div>
         <label for="color">
             <strong>Color:</strong>
         </label>
-        <input type="text" name="color" id="color" placeholder="color" th:value="${animal != null ? animal.color : ''}" />
+        <input type="text" name="color" id="color" placeholder="color" th:value="${animal != null ? animal.color : ''}" th:field="${animal.color}" />
     </div>
     <div>
         <label for="description">
             <strong>Description:</strong>
         </label>
-        <input type="text" name="description" id="description" placeholder="description" th:value="${animal != null ? animal.description : ''}" />
+        <input type="text" name="description" id="description" placeholder="description" th:value="${animal != null ? animal.description : ''}" th:field="${animal.description}" />
     </div>
     <div id="notes-block">
         <label name="notes-block">
@@ -85,10 +88,10 @@
             </tr>
         </table>
     </div>
-<!--    <div class="buttonbar">  -->
-        <button type="submit" id="saveAnimal">Save Animal</button>
-<!--        <button>Delete Animal</button>
-    </div>  -->
+    <div class="buttonbar">
+        <button type="submit" id="saveAnimal" name="action" value="save">Save Animal</button>
+        <button type="submit" id="deleteAnimal" name="action" value="delete">Delete Animal</button>
+    </div>
 </form>
 <img id="mainImage" th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg" />
 

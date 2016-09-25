@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="breeds" type="java.util.List<Breed>"*/-->
+<!--/*@thymesVar id="breed" type="com.theIronYard.entity.Breed"*/-->
+<!--/*@thymesVar id="types" type="java.util.List<Type>"*/-->
+<!--/*@thymesVar id="type" type="com.theIronYard.entity.Type"*/-->
 <head>
     <title>Manage Animal Breeds</title>
     <link th:href="@{css/styles.css}" href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
@@ -20,25 +24,25 @@
 <table>
     <tr>
         <th>Breed</th>
+        <th>Type</th>
         <th></th>
     </tr>
-    <!--/*@thymesVar id="breeds" type="java.util.List<Breed>"*/-->
-    <!--/*@thymesVar id="breed" type="com.theIronYard.entity.Breed"*/-->
     <tr th:each="breed : ${breeds}">
         <td th:text="${breed.name}">
             Calico
         </td>
+        <td th:text="${breed.type.name}">
+            Cat
+        </td>
         <td>
-            <button class="delete-btn">
-                <a th:href="@{/deleteType(typeId=${breed.id})}">
-                    <img class="delete-btn" th:src="@{images/delete.jpeg}" src="../static/images/delete.jpeg" />
-                </a>
-            </button>
+            <a href="breed.html" th:href="@{/deleteBreed(id=${breed.id})}">
+                <img class="delete-btn" th:src="@{images/delete.jpeg}" src="../static/images/delete.jpeg" alt="Delete" />
+            </a>
         </td>
     </tr>
 </table>
 
-<form method="post">
+<form method="post" action="breed.html" th:action="@{/addBreed}">
     <div>
         <label for="breedName">
             <strong>Breed:</strong>
@@ -49,11 +53,11 @@
         <label for="typeId">
             <strong>Type:</strong> <span class="required">*</span>
         </label>
-        <!--/*@thymesVar id="types" type="java.util.List<Type>"*/-->
-        <!--/*@thymesVar id="type" type="com.theIronYard.entity.Type"*/-->
-        <select name="typeId" id="typeId" th:each="type : ${types}">
+        <select name="typeId" id="typeId">
             <option>select...</option>
-            <option th:text="${type.name}" th:value="${type.id}">Cat</option>
+            <option th:each="type : ${types}"
+                    th:text="${type.name}"
+                    th:value="${type.id}">Cat</option>
         </select>
     </div>
     <div class="buttonbar">

@@ -65,26 +65,31 @@ public class AnimalShelterController {
     }
 
     @RequestMapping(path = "/saveAnimal", method = RequestMethod.POST)
-    public String addAnimal(@RequestParam Integer id,
+    public String addAnimal(@RequestParam (defaultValue = "-1") Integer id,
                             @RequestParam String name,
                             @RequestParam Integer typeId,
                             @RequestParam Integer breedId,
                             @RequestParam String color,
-                            @RequestParam String description) {
-        Breed breed = breedRepository.getOne(breedId);
-        Type type = typeRepository.getOne(typeId);
-        Animal animal;
+                            @RequestParam String description,
+                            @RequestParam String action) {
+        if (action.equals("save")) {
+            Breed breed = breedRepository.getOne(breedId);
+//        Type type = typeRepository.getOne(typeId);
+            Animal animal;
 
-        if (animalRepository.exists(id)) {
-            animal = new Animal(id, name, breed, color, description);
-        } else {
-            animal = new Animal(name, breed, color, description);
+            if (animalRepository.exists(id)) {
+                animal = new Animal(id, name, breed, color, description);
+            } else {
+                animal = new Animal(name, breed, color, description);
+            }
+            // breedRepository.save(breed);
+            animalRepository.saveAndFlush(animal);
+        } else if (action.equals("delete")) {
+            animalRepository.delete(id);
         }
-        animalRepository.save(animal);
 
-        return "list";
+        return "redirect:/";
     }
-
 
     @RequestMapping(path = "/breed", method = RequestMethod.GET)
     public String breed(Model model) {
@@ -95,10 +100,11 @@ public class AnimalShelterController {
         return "breed";
     }
     
-    @RequestMapping(path = "/deleteBreed", method = RequestMethod.POST)
-    public String deleteBreed(@RequestParam(defaultValue = "") Integer id) {
-        Breed breed = breedRepository.findOne(id);
-        if(animalRepository.findByBreed(id).size() == 0) {
+    @RequestMapping(path = "/deleteBreed", method = RequestMethod.GET)
+    public String deleteBreed(Integer id) {
+       // Breed breed = breedRepository.findOne(id);
+        //int breedId = id.intValue();
+        if(animalRepository.findByBreedId(id).size() == 0) {
             breedRepository.deleteById(id);
         } else {
 

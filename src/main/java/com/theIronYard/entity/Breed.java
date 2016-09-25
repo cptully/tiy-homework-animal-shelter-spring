@@ -9,11 +9,13 @@ import javax.persistence.*;
 public class Breed {
     @Id
     @GeneratedValue
+    @Column(name = "id", nullable = false, unique = true)
     private Integer id;
-    
+
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Type type;
 
     public Breed(Integer breedId, String name, Type type) {

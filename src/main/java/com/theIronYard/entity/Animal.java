@@ -2,8 +2,8 @@ package com.theIronYard.entity;
 
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chris on 8/12/16.
@@ -18,12 +18,12 @@ public class Animal {
     private String description;
     private String color;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Breed breed;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "animal_id")
-    private Set<Note> notes;
+    private List<Note> notes;
 
     /**
      * entity constructor which creates a new animal with the specified properties.
@@ -39,7 +39,7 @@ public class Animal {
         this.breed = new Breed(breed.getId(), breed.getName(), breed.getType());
         this.color = color;
         this.description = description;
-        this.notes = new HashSet<>();
+        this.notes = new ArrayList<>();
     }
 
     public Animal(String name, Breed breed, String color, String description) {
@@ -47,7 +47,7 @@ public class Animal {
         this.breed = new Breed(breed.getId(), breed.getName(), breed.getType());
         this.color = color;
         this.description = description;
-        this.notes = new HashSet<>();
+        this.notes = new ArrayList<>();
     }
 
     /**
@@ -58,7 +58,7 @@ public class Animal {
         this.breed = new Breed();
         this.color = "";
         this.description = "";
-        this.notes = new HashSet<>();
+        this.notes = new ArrayList<>();
     }
 
     // getter methods
@@ -67,7 +67,7 @@ public class Animal {
     public String getDescription(){ return this.description; }
     public String getColor(){ return this.color; }
     public Integer getId() {return id;}
-    public Set<Note> getNotes() {return notes;}
+    public List<Note> getNotes() {return notes;}
     public Integer getNoteCount() {return notes.size();}
 
 
@@ -80,9 +80,9 @@ public class Animal {
     public void setDescription(String description){ this.description = description; }
     public void setColor(String color){ this.color = color; }
     public void setId(Integer id) {this.id = id;}
-    public void setNotes(Set<Note> notes) {
+    public void setNotes(ArrayList<Note> notes) {
         // create blank list
-        this.notes = new HashSet<>();
+        this.notes = new ArrayList<>();
 
         // addAnimal notes to list instead of creating a link
         this.notes.addAll(notes);
