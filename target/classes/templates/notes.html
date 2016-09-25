@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Animal Notes</title>
+    <link rel="stylesheet" th:href="@{css/styles.css}" href="../static/css/styles.css" />
+</head>
+<body>
+<!--/*@thymesVar id="animals" type="java.util.List<Animal>"*/-->
+<!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
+<h1>Chris, Dave and Jeff's Animal Shelter</h1>
+<nav>
+    <ul>
+        <li><a th:href="@{list}" href="list.html">List Animals</a></li>
+        <li><a th:href="@{addAnimal}" href="addAnimal.html">Add an Animal</a></li>
+        <li><a th:href="@{type}" href="type.html">Manage Animal Types</a></li>
+        <li><a th:href="@{breed}" href="breed.html">Manage Animal Breeds</a></li>
+    </ul>
+</nav>
+
+<h2>Animal Notes</h2>
+
+<div class="animal">
+    <img th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg" />
+
+    <div class="detail">
+        <strong>Name:</strong> Myst<br/>
+        <strong>Type:</strong> Cat<br/>
+        <strong>Breed:</strong> Tabby<br/>
+        <strong>Color:</strong> Grey<br/>
+        <strong>Description:</strong> skittish but like to chase laser pointers<br/>
+    </div>
+</div>
+
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Note</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>
+            1/1/2012
+        </td>
+        <td>
+            Myst has been eating more food than usual and loosing weight.
+        </td>
+        <td>
+            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${static/images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            1/20/2012
+        </td>
+        <td>
+            Myst has cancer of the tounge.
+        </td>
+        <td>
+            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            2/12/2012
+        </td>
+        <td>
+            Myst was put down because he could no longer move around on his own.
+        </td>
+        <td>
+            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
+        </td>
+    </tr>
+</table>
+
+<form th:action="${notes}" action="notes.html" method="post">
+    <div>
+        <label for="note" class="noteLabel">
+            <strong>Add a note:</strong>
+        </label>
+        <textarea name="note" id="note"></textarea>
+
+    </div>
+
+    <button type="submit" name="addNote" value="addNote">Add Note</button>
+</form>
+
+</body>
+</html>

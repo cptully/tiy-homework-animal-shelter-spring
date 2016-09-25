@@ -44,7 +44,7 @@ public class AnimalShelterController {
         return "list";
     }
 
-    @RequestMapping(path = "addAnimal", method = RequestMethod.GET)
+    @RequestMapping(path = "/addAnimal", method = RequestMethod.GET)
     public String addAnimal(Model model, @RequestParam(defaultValue = "") Integer id) {
         List<Type> types = typeRepository.findAll();
         Animal animal;
@@ -64,9 +64,8 @@ public class AnimalShelterController {
         return "addAnimal";
     }
 
-    @RequestMapping(path = "addAnimal", method = RequestMethod.POST)
-    public String addAnimal(Model model,
-                            @RequestParam Integer id,
+    @RequestMapping(path = "/saveAnimal", method = RequestMethod.POST)
+    public String addAnimal(@RequestParam Integer id,
                             @RequestParam String name,
                             @RequestParam Integer typeId,
                             @RequestParam Integer breedId,
@@ -85,4 +84,65 @@ public class AnimalShelterController {
 
         return "list";
     }
+
+
+    @RequestMapping(path = "/breed", method = RequestMethod.GET)
+    public String breed(Model model) {
+        List<Breed> breeds =  breedRepository.findAll();
+        List<Type> types = typeRepository.findAll();
+        model.addAttribute("breeds", breeds);
+        model.addAttribute("types", types);
+        return "breed";
+    }
+    
+    @RequestMapping(path = "/deleteBreed", method = RequestMethod.POST)
+    public String deleteBreed(@RequestParam(defaultValue = "") Integer id) {
+        Breed breed = breedRepository.findOne(id);
+        if(animalRepository.findByBreed(id).size() == 0) {
+            breedRepository.deleteById(id);
+        } else {
+
+        }
+        return "redirect:/breed";
+    }
+
+    @RequestMapping(path = "/addBreed", method = RequestMethod.POST)
+    public String addBreed(@RequestParam String breedName,
+                           @RequestParam Integer typeId) {
+        Type type = typeRepository.findOne(typeId);
+        Breed breed = new Breed(breedName, type);
+        breedRepository.save(breed);
+        return "redirect:/breed";
+    }
+
+    @RequestMapping(path = "/type", method = RequestMethod.GET)
+    public String type(Model model) {
+        List<Type> types =  typeRepository.findAll();
+        model.addAttribute("types", types);
+        return "type";
+    }
+
+    @RequestMapping(path = "/addType", method = RequestMethod.POST)
+    public String addType(@RequestParam String typeName) {
+        Type type = new Type(typeName);
+        typeRepository.save(type);
+        return "redirect:/type";
+    }
+
+    @RequestMapping(path = "/deleteType", method = RequestMethod.GET)
+    public String deleteType(Integer id) {
+//        Type type = typeRepository.findOne(id);
+        if(breedRepository.findByTypeId(id).size() == 0) {
+            typeRepository.deleteById(id);
+        } else {
+
+        }
+        return "redirect:/type";
+    }
+
+    // TODO: 9/22/16 add, edit & delete methods for note
+
+    // TODO: 9/22/16 how much code to move out to animalService?
+
+    // TODO: 9/22/16 implement search function
 }

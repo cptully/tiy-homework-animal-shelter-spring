@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TypeRepository extends JpaRepository<Type, Integer> {
+    void deleteById(Integer id);
+    Type findById(Integer id);
 }

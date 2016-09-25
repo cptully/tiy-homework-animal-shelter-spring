@@ -9,4 +9,7 @@ import java.util.List;
 @Repository
 public interface BreedRepository extends JpaRepository<Breed, Integer> {
     List<Breed> findByTypeName(String typeName);
+    List<Breed> findByTypeId(Integer id);
+
+    void deleteById(Integer id);
 }
