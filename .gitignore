@@ -1,5 +1,8 @@
 $ cat .gitignore
 
+target/
+.idea/
+
 # Ignore specific files
 .idea/workspace.xml
-
+**/.DS_Store

@@ -6,6 +6,7 @@
     </database-info>
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact"/>
     <database-model serializer="dbm" rdbms="POSTGRES" format-version="2.6">
+<<<<<<< HEAD
       <database id="1" name="animalshelter">
         <object-id>25234</object-id>
         <visible>1</visible>
@@ -53,6 +54,55 @@
         <object-id>11817</object-id>
       </schema>
       <schema id="15" parent="1" name="information_schema">
+=======
+      <database id="1" name="postgres">
+        <object-id>12641</object-id>
+      </database>
+      <database id="2" name="davehochstrasser">
+        <object-id>16385</object-id>
+      </database>
+      <database id="3" name="people">
+        <object-id>16386</object-id>
+      </database>
+      <database id="4" name="example">
+        <object-id>16524</object-id>
+      </database>
+      <database id="5" name="imdb">
+        <object-id>16554</object-id>
+      </database>
+      <database id="6" name="animal2">
+        <object-id>25057</object-id>
+      </database>
+      <database id="7" name="jokes">
+        <object-id>25107</object-id>
+      </database>
+      <database id="8" name="animalshelter3">
+        <object-id>25130</object-id>
+      </database>
+      <database id="9" name="animalshelter">
+        <object-id>25234</object-id>
+        <visible>1</visible>
+      </database>
+      <schema id="10" parent="9" name="public">
+        <object-id>2200</object-id>
+        <visible>1</visible>
+        <introspection-state-number>2111</introspection-state-number>
+        <introspection-timestamp>2016-09-21.15:39:57.425</introspection-timestamp>
+      </schema>
+      <schema id="11" parent="9" name="pg_catalog">
+        <object-id>11</object-id>
+      </schema>
+      <schema id="12" parent="9" name="pg_toast">
+        <object-id>99</object-id>
+      </schema>
+      <schema id="13" parent="9" name="pg_temp_1">
+        <object-id>11816</object-id>
+      </schema>
+      <schema id="14" parent="9" name="pg_toast_temp_1">
+        <object-id>11817</object-id>
+      </schema>
+      <schema id="15" parent="9" name="information_schema">
+>>>>>>> chris
         <object-id>12349</object-id>
       </schema>
       <sequence id="16" parent="10" name="hibernate_sequence">
