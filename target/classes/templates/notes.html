@@ -10,10 +10,10 @@
 <h1>Chris, Dave and Jeff's Animal Shelter</h1>
 <nav>
     <ul>
-        <li><a th:href="@{list}" href="list.html">List Animals</a></li>
-        <li><a th:href="@{addAnimal}" href="addAnimal.html">Add an Animal</a></li>
-        <li><a th:href="@{type}" href="type.html">Manage Animal Types</a></li>
-        <li><a th:href="@{breed}" href="breed.html">Manage Animal Breeds</a></li>
+        <li><a href="list.html" th:href="@{/}">List Animals</a></li>
+        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
     </ul>
 </nav>
 
@@ -23,11 +23,12 @@
     <img th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg" />
 
     <div class="detail">
-        <strong>Name:</strong> Myst<br/>
-        <strong>Type:</strong> Cat<br/>
-        <strong>Breed:</strong> Tabby<br/>
-        <strong>Color:</strong> Grey<br/>
-        <strong>Description:</strong> skittish but like to chase laser pointers<br/>
+        <strong>Name:</strong> <span th:text="${animal.getName()}">animal name</span><br/>
+        <strong>Type:</strong> <span th:text="${animal.breed.type.name}">Cat</span><br/>
+        <strong>Breed:</strong> <span th:text="${animal.breed.name}">Calico</span><br/>
+        <strong>Color:</strong> <span th:text="${animal.color}">Grey</span><br/>
+        <strong>Description:</strong> <span th:text="${animal.description}">skittish but like to chase laser pointers</span><br/>
+        <strong>Notes:</strong> <span th:text="${animal.getNoteCount() + ' notes'}">3 notes</span><br/>
     </div>
 </div>
 
@@ -37,53 +38,33 @@
         <th>Note</th>
         <th></th>
     </tr>
-    <tr th:each="note : ${notes}">
-        <td th:datetime="${animal.note.date}">
+    <tr th:each="note : ${animal.notes}">
+        <td th:datetime="${note.date}">
             1/1/2012
         </td>
-        <td th:text="${animal.note.content}">
+        <td th:text="${note.content}">
             Myst has been eating more food than usual and loosing weight.
         </td>
         <td>
-            <a href="notes.html" th:href="@{/deleteNote(id=${note.id})}">
+            <a href="notes.html" th:href="@{/deleteNote(id=${note.id},animalId=${animal.id})}">
                 <img class="delete-btn" th:src="@{images/delete.jpeg}" src="../static/images/delete.jpeg" alt="Delete" />
             </a>
         </td>
     </tr>
-    <tr>
-        <td>
-            1/20/2012
-        </td>
-        <td>
-            Myst has cancer of the tounge.
-        </td>
-        <td>
-            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            2/12/2012
-        </td>
-        <td>
-            Myst was put down because he could no longer move around on his own.
-        </td>
-        <td>
-            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
-        </td>
-    </tr>
+
 </table>
 
-<form th:action="${notes}" action="notes.html" method="post">
+<form th:action="@{/notes}" action="notes.html" method="post">
+    <input type="hidden" name="id" th:value="${animal.id}"/>
     <div>
-        <label for="note" class="noteLabel">
+        <label for="content" class="noteLabel">
             <strong>Add a note:</strong>
         </label>
-        <textarea name="note" id="note"></textarea>
+        <textarea name="content" id="content"></textarea>
 
     </div>
 
-    <button type="submit" name="addNote" value="addNote">Add Note</button>
+    <button type="submit" id="addNote" name="addNote" value="addNote">Add Note</button>
 </form>
 
 </body>

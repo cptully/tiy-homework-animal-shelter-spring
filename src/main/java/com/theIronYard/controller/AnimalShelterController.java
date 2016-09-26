@@ -2,6 +2,7 @@ package com.theIronYard.controller;
 
 import com.theIronYard.entity.Animal;
 import com.theIronYard.entity.Breed;
+import com.theIronYard.entity.Note;
 import com.theIronYard.entity.Type;
 import com.theIronYard.repository.AnimalRepository;
 import com.theIronYard.repository.BreedRepository;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -165,6 +167,36 @@ public class AnimalShelterController {
     }
 
     // TODO: 9/22/16 add, edit & delete methods for note
+    @RequestMapping(path = "/deleteNote", method = RequestMethod.GET)
+    public String deleteNote(Model model, Integer id, Integer animalId) {
+
+        noteRepository.deleteById(id);
+
+        Animal animal = animalRepository.findOne(animalId);
+
+        return "redirect:/notes?id=" + animal.getId();
+    }
+
+    @RequestMapping(path = "/notes")
+    public String notes(Model model, Integer id, String content) {
+        Animal animal = animalRepository.findOne(id);
+        model.addAttribute("animal", animal);
+        if ((content != null) && (!content.equals(""))) {
+            animal.addNote(content);
+            animalRepository.save(animal);
+        }
+        return "notes";
+    }
+
+    @RequestMapping(path = "/addNote", method = RequestMethod.POST)
+    public String addNote(@RequestParam Integer id,
+                          @RequestParam LocalDate date,
+                          @RequestParam String content) {
+        //Note note = noteRepository.findOne(noteId);
+        Note note = new Note(id, content, date);
+        noteRepository.save(note);
+        return "redirect:/note";
+    }
 
     // TODO: 9/22/16 how much code to move out to animalService?
 
