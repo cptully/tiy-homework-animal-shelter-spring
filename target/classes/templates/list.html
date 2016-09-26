@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="animals" type="java.util.List<Animal>"*/-->
+<!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
+<!--/*@thymesVar id="types" type="java.util.List<Type>"*/-->
+<!--/*@thymesVar id="type" type="com.theIronYard.entity.Type"*/-->
+<!--/*@thymesVar id="breeds" type="java.util.List<Breed>"*/-->
+<!--/*@thymesVar id="breed" type="com.theIronYard.entity.Breed"*/-->
 <head>
     <title>Animal Shelter</title>
     <link rel="stylesheet" th:href="@{css/styles.css}" href="../static/css/styles.css" />
@@ -17,7 +23,7 @@
 
 <H2>List Animals</H2>
 
-<form id="searchForm">
+<form id="searchForm" role="form" action="list.html" th:action="@{/}" method="post">
 
     <h3>Search for an Animal:</h3>
     <div>
@@ -32,43 +38,37 @@
             <strong>Type:</strong>
         </label>
         <select name="typeId" id="typeId">
-            <option>select...</option>
-            <option value="0">Cat</option>
-            <option value="1">Dog</option>
-            <option value="2">Lizard</option>
-            <option value="3">Horse</option>
+            <option value="">select...</option>
+            <option th:each="type : ${types}"
+                    th:text="${type.name}"
+                    th:value="${type.id}">Cat</option>
         </select>
     </div>
 
     <div>
-        <label for="id">
+        <label for="breedId">
             <strong>Breed:</strong>
         </label>
-        <select name="id" id="id">
-            <option>select...</option>
-            <option value="0">Calico</option>
-            <option value="0">Tabby</option>
-            <option value="0">Mixed</option>
+        <select name="breedId" id="breedId">
+            <option value="">select...</option>
+            <option th:each="breed : ${breeds}"
+                    th:text="${breed.name}"
+                    th:value="${breed.id}">Cat</option>
         </select>
     </div>
 
-
     <div>
-        <label for="animalid">
+        <label for="animalId">
             <strong>Animal ID:</strong>
         </label>
-        <input type="text" name="animalid" id="animalid" placeholder="ID" />
+        <input type="text" name="animalId" id="animalId" placeholder="ID" />
     </div>
 
-    <button>Search</button>
+    <button type="submit" id="search" name="action" value="search">Search</button>
 
 </form>
 
-
-
 <section>
-    <!--/*@thymesVar id="animals" type="java.util.List<Animal>"*/-->
-    <!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
      <div class="animal" th:each="animal : ${animals}">
         <img th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg" />
 
@@ -78,7 +78,7 @@
             <strong>Breed:</strong> <span th:text="${animal.breed.name}">Calico</span><br/>
             <strong>Color:</strong> <span th:text="${animal.color}">Grey</span><br/>
             <strong>Description:</strong> <span th:text="${animal.description}">skittish but like to chase laser pointers</span><br/>
-            <strong>Notes:</strong> <a th:href="@{/animalNotes}" href="animalNotes" th:text="${animal.getNoteCount() + ' notes'}">3 notes</a><br/>
+            <strong>Notes:</strong> <a th:href="@{/animalNotes}" href="notes.html" th:text="${animal.getNoteCount() + ' notes'}">3 notes</a><br/>
         </div>
     </div>
 

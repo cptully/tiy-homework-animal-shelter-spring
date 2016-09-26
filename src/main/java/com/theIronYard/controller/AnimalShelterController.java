@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -37,10 +36,36 @@ public class AnimalShelterController {
 
 
 
-    @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String list(Model model) {
+    @RequestMapping(path = "/"/*, method = RequestMethod.GET*/)
+    public String list(Model model,
+                       String name,
+                       Integer typeId,
+                       Integer breedId,
+                       Integer animalId) {
         List<Animal> animals =  animalRepository.findAll();
+        List<Breed> breeds = breedRepository.findAll();
+        List<Type> types = typeRepository.findAll();
+
+        if ((name != null ) && (!name.equals(""))) {
+            animals.clear();
+            animals = animalRepository.findByName(name);
+        } else if (animalId != null) {
+            Animal animal = animalRepository.findOne(animalId);
+            animals.clear();
+            animals.add(animal);
+        } else if (breedId != null) {
+            animals.clear();
+            animals = animalRepository.findByBreedId(breedId);
+        } else if (typeId != null) {
+            animals.clear();
+            List<Breed> tempBreeds = breedRepository.findByTypeId(typeId);
+            for (Breed breed : tempBreeds) {
+                animals.addAll(animalRepository.findByBreedId(breed.getId()));
+            }
+        }
         model.addAttribute("animals", animals);
+        model.addAttribute("breeds", breeds);
+        model.addAttribute("types", types);
         return "list";
     }
 
