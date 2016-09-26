@@ -37,15 +37,17 @@
         <th>Note</th>
         <th></th>
     </tr>
-    <tr>
-        <td>
+    <tr th:each="note : ${notes}">
+        <td th:datetime="${animal.note.date}">
             1/1/2012
         </td>
-        <td>
+        <td th:text="${animal.note.content}">
             Myst has been eating more food than usual and loosing weight.
         </td>
         <td>
-            <a th:href="notes" href="notes.html"><img class="delete-btn" th:src="${static/images/delete.jpeg}" src="../static/images/delete.jpeg" /></a>
+            <a href="notes.html" th:href="@{/deleteNote(id=${note.id})}">
+                <img class="delete-btn" th:src="@{images/delete.jpeg}" src="../static/images/delete.jpeg" alt="Delete" />
+            </a>
         </td>
     </tr>
     <tr>

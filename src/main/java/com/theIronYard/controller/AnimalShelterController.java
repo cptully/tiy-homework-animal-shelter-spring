@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -102,12 +101,8 @@ public class AnimalShelterController {
     
     @RequestMapping(path = "/deleteBreed", method = RequestMethod.GET)
     public String deleteBreed(Integer id) {
-       // Breed breed = breedRepository.findOne(id);
-        //int breedId = id.intValue();
         if(animalRepository.findByBreedId(id).size() == 0) {
             breedRepository.deleteById(id);
-        } else {
-
         }
         return "redirect:/breed";
     }
@@ -137,11 +132,8 @@ public class AnimalShelterController {
 
     @RequestMapping(path = "/deleteType", method = RequestMethod.GET)
     public String deleteType(Integer id) {
-//        Type type = typeRepository.findOne(id);
         if(breedRepository.findByTypeId(id).size() == 0) {
             typeRepository.deleteById(id);
-        } else {
-
         }
         return "redirect:/type";
     }
