@@ -9,6 +9,9 @@ import com.theIronYard.repository.BreedRepository;
 import com.theIronYard.repository.NoteRepository;
 import com.theIronYard.repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,33 +41,33 @@ public class AnimalShelterController {
 
 
 
-    @RequestMapping(path = "/"/*, method = RequestMethod.GET*/)
+
+    @RequestMapping(path = "/")
     public String list(Model model,
                        String name,
                        Integer typeId,
                        Integer breedId,
-                       Integer animalId) {
-        List<Animal> animals =  animalRepository.findAll();
-        List<Breed> breeds = breedRepository.findAll();
-        List<Type> types = typeRepository.findAll();
+                       Integer animalId, @PageableDefault(size = 15, sort = "name") Pageable pageable
+                       ) {
+        Page<Animal> animals =  animalRepository.findAll(pageable);
+        Page<Breed> breeds = breedRepository.findAll(pageable);
+        Page<Type> types = typeRepository.findAll(pageable);
+
 
         if ((name != null ) && (!name.equals(""))) {
-            animals.clear();
-            animals = animalRepository.findByName(name);
+            animals = animalRepository.findByName(name, pageable);
         } else if (animalId != null) {
-            Animal animal = animalRepository.findOne(animalId);
-            animals.clear();
-            animals.add(animal);
+            animals = animalRepository.findById(animalId, pageable);
         } else if (breedId != null) {
-            animals.clear();
-            animals = animalRepository.findByBreedId(breedId);
+            animals = animalRepository.findByBreedId(breedId, pageable);
         } else if (typeId != null) {
-            animals.clear();
-            List<Breed> tempBreeds = breedRepository.findByTypeId(typeId);
-            for (Breed breed : tempBreeds) {
-                animals.addAll(animalRepository.findByBreedId(breed.getId()));
-            }
+            animals = animalRepository.findByTypeId(typeId, pageable);
+//            List<Breed> tempBreeds = breedRepository.findByTypeId(typeId);
+//            for (Breed breed : tempBreeds) {
+//                animals.addAll(animalRepository.findByBreedId(breed.getId()));
+//            }
         }
+
         model.addAttribute("animals", animals);
         model.addAttribute("breeds", breeds);
         model.addAttribute("types", types);
