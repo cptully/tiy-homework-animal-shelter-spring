@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Created by chris on 9/20/16.
- */
+
 @Controller
 public class AnimalShelterController {
 
@@ -38,7 +36,7 @@ public class AnimalShelterController {
 
 
 
-    @RequestMapping(path = "/"/*, method = RequestMethod.GET*/)
+    @RequestMapping(path = "/")
     public String list(Model model,
                        String name,
                        Integer typeId,
@@ -101,7 +99,7 @@ public class AnimalShelterController {
                             @RequestParam String action) {
         if (action.equals("save")) {
             Breed breed = breedRepository.getOne(breedId);
-//        Type type = typeRepository.getOne(typeId);
+            Type type = typeRepository.getOne(typeId);
             Animal animal;
 
             if (animalRepository.exists(id)) {
@@ -109,7 +107,7 @@ public class AnimalShelterController {
             } else {
                 animal = new Animal(name, breed, color, description);
             }
-            // breedRepository.save(breed);
+//            breedRepository.save(breed);
             animalRepository.saveAndFlush(animal);
         } else if (action.equals("delete")) {
             animalRepository.delete(id);

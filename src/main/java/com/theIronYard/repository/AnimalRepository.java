@@ -10,4 +10,8 @@ import java.util.List;
 public interface AnimalRepository extends JpaRepository<Animal, Integer> {
     List<Animal> findByBreedId(Integer id);
     List<Animal> findByName(String name);
+
+
+    // find all animals whose breed matched the given typeID
+//    Page<Animal> findBy
 }
