@@ -29,7 +29,7 @@ public class User {
     @Length(max = 40)
     private String name;
 
-    public User(){};
+    public User(){}
 
 
     public User(String name, String email, String password) {

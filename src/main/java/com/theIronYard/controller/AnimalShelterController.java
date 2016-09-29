@@ -37,10 +37,6 @@ public class AnimalShelterController {
     @Autowired
     AnimalService animalService;
 
-    public void afterInit() {
-        animalService.createDefaultAdminUser();
-    }
-
     @RequestMapping(path = "/")
     public String list(Model model,
                        Search search,
@@ -163,6 +159,10 @@ public class AnimalShelterController {
         return "redirect:/note";
     }
 
+    public void afterInit() {
+        animalService.createDefaultAdminUser();
+    }
+
     @RequestMapping(path = "/login", method = RequestMethod.GET)
     public String loginForm(Login login, Model model){
 
@@ -233,14 +233,10 @@ public class AnimalShelterController {
             try {
                 animalService.saveUser(editUser);
                 return "redirect:/listUsers";
-
             } catch (PasswordStorage.CannotPerformOperationException e) {
-
                 editUser.setPassword("");
                 return "userForm";
-
             }
-
         }
     }
 
