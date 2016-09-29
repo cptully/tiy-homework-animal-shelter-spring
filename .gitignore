@@ -1,7 +1,11 @@
 $ cat .gitignore
 
 target/
+.env
 .idea/
+*.iml
+.gradle
+build
 
 # Ignore specific files
 .idea/workspace.xml
