@@ -31,7 +31,11 @@ public class AnimalShelterController {
     @RequestMapping(path = "/")
     public String list(Model model,
                        Search search,
-                       @PageableDefault(size = 15, sort = "name") Pageable pageable) {
+                       @PageableDefault(size = 15, sort = "name") Pageable pageable,
+                       String action) {
+        if (action.equals("clear")) {
+            search = new Search();
+        }
         Page<Animal> animals = animalService.listAnimals(search, pageable);
         List<Breed> breeds = animalService.breedList();
         List<Type> types = animalService.typeList();

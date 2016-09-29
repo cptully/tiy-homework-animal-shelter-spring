@@ -32,7 +32,7 @@
         <label for="name">
             <Strong>Name:</Strong>
         </label>
-        <input type="text" name="name" id="name" placeholder="animal's name" />
+        <input type="text" name="name" id="name" placeholder="animal's name" th:value="${search.name}"/>
     </div>
 
     <div>
@@ -43,7 +43,8 @@
             <option value="">select...</option>
             <option th:each="type : ${types}"
                     th:text="${type.name}"
-                    th:value="${type.id}">Cat</option>
+                    th:value="${type.id}"
+                    th:selected="${search.typeId} == ${type.id}">Cat</option>
         </select>
     </div>
 
@@ -55,7 +56,8 @@
             <option value="">select...</option>
             <option th:each="breed : ${breeds}"
                     th:text="${breed.name}"
-                    th:value="${breed.id}">Cat</option>
+                    th:value="${breed.id}"
+                    th:selected="${search.breedId} == ${breed.id}">Cat</option>
         </select>
     </div>
 
@@ -63,10 +65,11 @@
         <label for="animalId">
             <strong>Animal ID:</strong>
         </label>
-        <input type="text" name="animalId" id="animalId" placeholder="ID" />
+        <input type="text" name="animalId" id="animalId" placeholder="ID" th:text="${search.animalId}"/>
     </div>
 
     <button type="submit" id="search" name="action" value="search">Search</button>
+    <button type="submit" id="clear" name="action" value="clear">Clear</button>
 
 </form>
 
