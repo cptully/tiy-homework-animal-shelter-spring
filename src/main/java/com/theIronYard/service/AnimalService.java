@@ -1,19 +1,26 @@
 package com.theIronYard.service;
 
+<<<<<<< HEAD
 import com.theIronYard.bean.Search;
 import com.theIronYard.entity.Animal;
 import com.theIronYard.entity.Breed;
 import com.theIronYard.entity.Type;
+=======
+import com.theIronYard.entity.Animal;
+>>>>>>> e6679d0d0330e60970c7ec448060e86431f9e474
 import com.theIronYard.repository.AnimalRepository;
 import com.theIronYard.repository.BreedRepository;
 import com.theIronYard.repository.NoteRepository;
 import com.theIronYard.repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+<<<<<<< HEAD
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
+=======
+>>>>>>> e6679d0d0330e60970c7ec448060e86431f9e474
 
 /**
  * Created by chris on 8/12/16.
@@ -63,7 +70,12 @@ public class AnimalService {
         return breedRepository.findAll();
     }
 
+<<<<<<< HEAD
     public List<Type> listTypes(){
         return typeRepository.findAll();
     }*/
+=======
+
+
+>>>>>>> e6679d0d0330e60970c7ec448060e86431f9e474
 }
