@@ -39,10 +39,6 @@ public class AnimalShelterController {
 
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> e6679d0d0330e60970c7ec448060e86431f9e474
     @RequestMapping(path = "/")
     public String list(Model model,
                        String name,
