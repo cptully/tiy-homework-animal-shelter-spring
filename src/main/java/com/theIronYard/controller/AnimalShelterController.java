@@ -33,7 +33,7 @@ public class AnimalShelterController {
                        Search search,
                        @PageableDefault(size = 15, sort = "name") Pageable pageable,
                        String action) {
-        if (action.equals("clear")) {
+        if ((action != null) && (action.equals("clear"))) {
             search = new Search();
         }
         Page<Animal> animals = animalService.listAnimals(search, pageable);
