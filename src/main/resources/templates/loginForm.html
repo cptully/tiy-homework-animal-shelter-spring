@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--/*@thymesVar id="login" type="com.theironyard.bean.Login"*/-->
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../static/css/styles.css" />
+</head>
+<body>
+<h1>Animal Shelter</h1>
+
+<nav>
+    <ul class="nav">
+        <!--/*@thymesVar id="user" type=""*/-->
+        <li><a href="list.html" th:href="@{/}">List Animals</a></li>
+        <li th:if="${user}"><a th:href="@{/addAnimal}" href="addAnimal.html" >Add/Edit Animal</a></li>
+        <li th:if="${user}"><a th:href="@{/logout}" href="loginForm.html" >Logout</a></li>
+        <li th:unless="${user}"><a th:href="@{/login}" href="loginForm.html" >Login</a></li>
+        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+    </ul>
+</nav>
+
+<h2>Login</h2>
+
+<form action="list.html" th:action="@{/login}" th:object="${login}" method="post">
+    <p th:if="*{loginFailed}" class="error" >Login Failed!!!</p>
+
+    <div>
+        <label for="email" >
+            Email:
+        </label>
+        <input type="email" name="email" id="email" value="" th:value="*{email}" />
+        <ul class="error"><li th:each="err : ${#fields.errors('email')}" >Error!</li></ul>
+    </div>
+
+    <div>
+        <label for="password">
+            Password:
+        </label>
+        <input type="password" name="password" id="password" value="" />
+        <ul class="error"><li th:each="err : ${#fields.errors('password')}" >Error!</li></ul>
+    </div>
+    <div>
+         <button>Login!</button>
+    </div>
+</form>
+
+</body>
+</html>

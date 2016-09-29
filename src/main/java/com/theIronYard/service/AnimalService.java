@@ -1,20 +1,16 @@
 package com.theIronYard.service;
 
+import com.theIronYard.bean.Login;
 import com.theIronYard.bean.Search;
 import com.theIronYard.entity.*;
-import com.theIronYard.entity.Animal;
-import com.theIronYard.repository.AnimalRepository;
-import com.theIronYard.repository.BreedRepository;
-import com.theIronYard.repository.NoteRepository;
-import com.theIronYard.repository.TypeRepository;
+import com.theIronYard.repository.*;
+import com.theIronYard.utility.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,9 +18,9 @@ import java.util.List;
  */
 @Service
 public class AnimalService {
-    // properties
+
     @Autowired
-    NoteRepository noteRepository;
+    UserRepository userRepository;
 
     @Autowired
     AnimalRepository animalRepository;
@@ -35,6 +31,8 @@ public class AnimalService {
     @Autowired
     TypeRepository typeRepository;
 
+    @Autowired
+    NoteRepository noteRepository;
 
     public List<Animal> listAnimals(){
         return animalRepository.findAll();
@@ -115,4 +113,72 @@ public class AnimalService {
         Note note = new Note(animalId, content, date);
         noteRepository.save(note);
     }
+
+    public User getUser(Integer id) {
+        if(id != null) {
+            return userRepository.findOne(id);
+        } else {
+            return new User();
+        }
+    }
+
+    public User getUserOrNull(Integer id){
+        if(id != null) {
+            return userRepository.findOne(id);
+        } else {
+            return null;
+        }
+    }
+
+    public User authenticateUser(Login login) {
+
+        try {
+            User user = userRepository.findByEmail(login.getEmail());
+
+            if(user != null && PasswordStorage.verifyPassword(login.getPassword(), user.getPassword())){
+                return user;
+            }
+        } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException e) {
+            e.printStackTrace();
+        }
+        login.setLoginFailed(true);
+        return null;
+    }
+
+    public void createDefaultAdminUser() {
+        if(userRepository.count() == 0){
+            try {
+                userRepository.save(new User("Default Administrator", "admin@admin.com", PasswordStorage.createHash("password")));
+            } catch (PasswordStorage.CannotPerformOperationException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public List<User> listUsers() {
+        return userRepository.findAll();
+    }
+
+    public void saveUser(User user) throws PasswordStorage.CannotPerformOperationException {
+
+        if(user.getId() != null){
+            User oldUser = userRepository.findOne(user.getId());
+
+            if(!oldUser.getPassword().equals(user.getPassword())){
+                user.setPassword(PasswordStorage.createHash(user.getPassword()));
+            }
+        } else {
+            user.setPassword(PasswordStorage.createHash(user.getPassword()));
+        }
+        userRepository.save(user);
+    }
+
+    public void deleteUser(Integer id) {
+        userRepository.delete(id);
+    }
 }
+
+
+
+
+
