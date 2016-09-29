@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--/*@thymesVar id="animals" type="java.util.List<Animal>"*/-->
+<!--/*@thymesVar id="animals" type="org.springframework.data.domain.Page<Animal>"*/-->
 <!--/*@thymesVar id="animal" type="com.theIronYard.entity.Animal"*/-->
 <!--/*@thymesVar id="types" type="java.util.List<Type>"*/-->
 <!--/*@thymesVar id="type" type="com.theIronYard.entity.Type"*/-->
 <!--/*@thymesVar id="breeds" type="java.util.List<Breed>"*/-->
 <!--/*@thymesVar id="breed" type="com.theIronYard.entity.Breed"*/-->
+<!--/*@thymesVar id="search" type="com.theIronYard.bean.Search"*/-->
+<!--/*@thymesVar id="pageable" type="org.springframework.data.domain.Pageable"*/-->
 <head>
     <title>Animal Shelter</title>
     <link rel="stylesheet" th:href="@{css/styles.css}" href="../static/css/styles.css" />
@@ -68,8 +70,22 @@
 
 </form>
 
+<div class="pagination">
+    <a href="list.html"
+       th:href="@{/(page=${pageable.previousOrFirst().pageNumber}, name=${search.name}, typeId=${search.typeId}, breedId=${search.breedId}, id=${search.animalId})}">
+        <button disabled="disabled"
+                th:disabled="${animals.isFirst()}">Back</button></a>
+
+    <span th:text="${pageable.offset + 1} + ' - ' + ${pageable.offset + animals.numberOfElements} + ' of ' + ${animals.totalElements}">1 - 10 of 54</span>
+
+    <a href="list.html"
+       th:href="@{/(page=${pageable.next().pageNumber}, name=${search.name}, typeId=${search.typeId}, breedId=${search.breedId}, id=${search.animalId})}">
+        <button th:disabled="${animals.isLast()}">Next</button></a>
+</div>
+
 <section>
-     <div class="animal" th:each="animal : ${animals}">
+
+    <div class="animal" th:each="animal : ${animals}">
         <img th:src="@{images/captainmycaptain.jpg}" src="../static/images/captainmycaptain.jpg" />
 
         <div class="detail">
@@ -82,6 +98,20 @@
         </div>
     </div>
 
-</section> 
+</section>
+
+<div class="pagination">
+    <a href="list.html"
+       th:href="@{/(page=${pageable.previousOrFirst().pageNumber}, name=${search.name}, typeId=${search.typeId}, breedId=${search.breedId}, id=${search.animalId})}">
+        <button disabled="disabled"
+                th:disabled="${animals.isFirst()}">Back</button></a>
+
+    <span th:text="${pageable.offset + 1} + ' - ' + ${pageable.offset + animals.numberOfElements} + ' of ' + ${animals.totalElements}">1 - 10 of 54</span>
+
+    <a href="list.html"
+       th:href="@{/(page=${pageable.next().pageNumber}, name=${search.name}, typeId=${search.typeId}, breedId=${search.breedId}, id=${search.animalId})}">
+        <button th:disabled="${animals.isLast()}">Next</button></a>
+</div>
+
 </body>
 </html>

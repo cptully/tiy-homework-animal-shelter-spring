@@ -13,16 +13,13 @@ import java.util.List;
 public interface AnimalRepository extends JpaRepository<Animal, Integer> {
     Page<Animal> findByBreedId(Integer id, Pageable pageable);
     List<Animal> findByBreedId(Integer id);
-<<<<<<< HEAD
-    List<Animal> findByName(String name);
 
-
-    // find all animals whose breed matched the given typeID
-//    Page<Animal> findBy
-=======
     Page<Animal> findByName(String name, Pageable pageable);
+    Page<Animal> findById(Integer id, Pageable pageable);
+
     @Query(value = "Select a From Animal a WHERE a.breed.type.id = ?1")
     Page<Animal> findByTypeId(Integer id, Pageable pageable);
-    Page<Animal> findById(Integer id, Pageable pageable);
->>>>>>> e6679d0d0330e60970c7ec448060e86431f9e474
+
+    @Query(value = "Select a From Animal a WHERE a.breed.type.id = ?1")
+    List<Animal> findByTypeId(Integer id);
 }

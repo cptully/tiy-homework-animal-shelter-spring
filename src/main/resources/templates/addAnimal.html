@@ -24,7 +24,7 @@
 
 <p><span class="required">*</span> indicates a required field</p>
 
-<form id="addAnimalForm" role="form" action="addAnimal.html" th:action="@{/saveAnimal}" method="post" th:object="${animal}">
+<form id="addAnimalForm" role="form" action="addAnimal.html" th:action="@{/editAnimal}" method="post" th:object="${animal}">
     <input type="hidden" name="id" id="id" th:value="${animal != null ? animal.id : -1}" />
     <div>
         <label for="name">
