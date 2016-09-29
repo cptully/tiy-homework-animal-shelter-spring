@@ -15,9 +15,13 @@
 <nav>
     <ul>
         <li><a href="list.html" th:href="@{/}">List Animals</a></li>
+        <li th:if="${user}"><a th:href="@{/listUsers}" href="userList.html" >List Users</a></li>
+        <li th:if="${user}"><a th:href="@{/logout}" href="loginForm.html" >Logout</a></li>
+        <li th:unless="${user}"><a th:href="@{/login}" href="loginForm.html" >Login</a></li>
         <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
         <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
         <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+
     </ul>
 </nav>
 

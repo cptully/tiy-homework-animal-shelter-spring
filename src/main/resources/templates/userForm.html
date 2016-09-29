@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Form</title>
+    <!--/*@thymesVar id="user" type="com.theIronYard.entity.User"*/-->
+    <!--/*@thymesVar id="editUser" type="com.theIronYard.entity.User"*/-->
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../static/css/styles.css" />
+
+</head>
+<body>
+<h1>Animal Shelter</h1>
+
+<nav>
+    <ul class="nav">
+        <!--/*@thymesVar id="user" type=""*/-->
+        <li><a href="list.html" th:href="@{/}">List Animals</a></li>
+        <li th:if="${user}"><a th:href="@{/listUsers}" href="userList.html" >List Users</a></li>
+        <li th:if="${user}"><a th:href="@{/logout}" href="loginForm.html" >Logout</a></li>
+        <li th:unless="${user}"><a th:href="@{/login}" href="loginForm.html" >Login</a></li>
+    </ul>
+</nav>
+<!--/* greeting */-->
+
+<div class="greeting" th:if="${user}" >user</div>
+
+<p>All fields are required</p>
+
+<form action="userForm.html" th:action="@{/editUser}" th:object="${editUser}" method="post">
+
+    <input type="hidden" name="id" value="" th:value="*{id}" />
+
+    <div>
+        <label for="name" >
+            Name:
+        </label>
+        <input type="text" name="name" id="name" value="" />
+        <ul class="error"><li th:each="err : ${#fields.errors('name')}" th:text="${err}">Error!</li></ul>
+    </div>
+
+    <div>
+        <label for="email" >
+            Email:
+        </label>
+        <input type="text" name="email" id="email" value="" />
+        <ul class="error"><li th:each="err : ${#fields.errors('email')}" th:text="${err}">Error!</li></ul>
+    </div>
+
+    <div>
+        <label for="password" >
+            Password:
+        </label>
+        <input type="password" name="password" id="password" value="" th:value="*{password}"/>
+        <ul class="error"><li th:each="err : ${#fields.errors('password')}" th:text="${err}">Error!</li></ul>
+
+    </div>
+
+    <button>Save User</button>
+</form>
+
+</body>
+
+
+</html>

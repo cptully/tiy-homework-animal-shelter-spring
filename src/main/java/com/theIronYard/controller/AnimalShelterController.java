@@ -1,23 +1,27 @@
 package com.theIronYard.controller;
 
-import com.theIronYard.entity.Animal;
-import com.theIronYard.entity.Breed;
-import com.theIronYard.entity.Note;
-import com.theIronYard.entity.Type;
+import com.theIronYard.bean.Login;
+import com.theIronYard.entity.*;
 import com.theIronYard.repository.AnimalRepository;
 import com.theIronYard.repository.BreedRepository;
 import com.theIronYard.repository.NoteRepository;
 import com.theIronYard.repository.TypeRepository;
+import com.theIronYard.service.AnimalService;
+import com.theIronYard.utility.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,6 +42,13 @@ public class AnimalShelterController {
 
     @Autowired
     TypeRepository typeRepository;
+
+    @Autowired
+    AnimalService animalService;
+
+    public void afterInit() {
+        animalService.createDefaultAdminUser();
+    }
 
 
 
@@ -199,6 +210,99 @@ public class AnimalShelterController {
         Note note = new Note(id, content, date);
         noteRepository.save(note);
         return "redirect:/note";
+    }
+
+    @RequestMapping(path = "/login", method = RequestMethod.GET)
+    public String loginForm(Login login, Model model){
+
+        model.addAttribute("login", login);
+
+        return "loginForm";
+    }
+
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    public String login(@Valid Login login, HttpSession session){
+
+        User user = animalService.authenticateUser(login);
+
+        if(user != null){
+            session.setAttribute("userId", user.getId());
+            return "redirect:/";
+        } else {
+            return "loginForm";
+        }
+    }
+
+    @RequestMapping(path = "/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/listUsers")
+    public String listUsers(Model model, HttpSession session){
+        if(session.getAttribute("userId") == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("users", animalService.listUsers());
+
+        model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
+
+        return "userList";
+    }
+
+    @RequestMapping(path = "/editUser", method = RequestMethod.GET)
+    public String userForm(Integer id, Model model, HttpSession session){
+
+        if(session.getAttribute("userId") == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("editUser", animalService.getUser(id));
+
+        model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
+
+        return "userForm";
+    }
+
+    @RequestMapping(path = "/editUser", method = RequestMethod.POST)
+    public String editUser(@Valid @ModelAttribute(name = "editUser") User editUser, BindingResult bindingResult, Model model, HttpSession session){
+
+        if(session.getAttribute("userId") == null){
+            return "redirect:/login";
+        }
+
+        if(bindingResult.hasErrors()){
+
+            model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
+
+            return "userForm";
+        } else {
+            try {
+                animalService.saveUser(editUser);
+                return "redirect:/listUsers";
+
+            } catch (PasswordStorage.CannotPerformOperationException e) {
+
+                editUser.setPassword("");
+                return "userForm";
+
+            }
+
+        }
+    }
+
+    @RequestMapping(path = "/deleteUser")
+    public String deleteUser(Integer id, HttpSession session){
+
+        if(session.getAttribute("userId") == null){
+            return "redirect:/login";
+        }
+
+        animalService.deleteUser(id);
+
+        return "redirect:/listUsers";
     }
 
     // TODO: 9/22/16 how much code to move out to animalService?

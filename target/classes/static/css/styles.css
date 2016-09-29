@@ -111,6 +111,12 @@ textarea {
     margin-right: 2em;
 }
 
+form div{
+    padding: .5em;
+    width: 200px;
+    /*margin-right: 2em;*/
+}
+
 #mainImage {
     clear: right;
     float: left;

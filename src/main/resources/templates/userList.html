@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User List</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../static/css/styles.css" />
+
+</head>
+<body>
+<h1>Animal Shelter</h1>
+
+<nav>
+    <ul class="nav">
+        <!--/*@thymesVar id="user" type=""*/-->
+        <li><a href="list.html" th:href="@{/}">List Animals</a></li>
+        <li th:if="${user}"><a th:href="@{/listUsers}" href="userList.html" >List Users</a></li>
+        <li th:if="${user}"><a th:href="@{/logout}" href="loginForm.html" >Logout</a></li>
+        <li th:unless="${user}"><a th:href="@{/login}" href="loginForm.html" >Login</a></li>
+    </ul>
+</nav>
+<!--/* greeting */-->
+<div class="greeting" th:if="${user}">user</div>
+
+<h2 th:text="#{users.list}">List Users</h2>
+
+<ul class="nav">
+    <li th:if="${user}"><a th:href="@{/editUser}" href="userForm.html" >Add a User</a></li>
+</ul>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th></th>
+    </tr>
+
+    <tr th:each="usr : ${users}">
+        <td>
+            <a href="userForm.html" th:href="@{/editUser(id=${usr.id})}" >Jimmy Snooka</a>
+        </td>
+        <td>
+            jSnooka@somwhere.com
+        </td>
+        <td>
+            <a th:unless="${user.id eq usr.id}" href="userList.html" th:href="@{/deleteUser(id=${usr.id})}">
+                <img src="../static/images/delete.jpeg" th:src="@{/images/delete.png}" alt="Delete" th:alt="#{notes.delete}" /></a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
