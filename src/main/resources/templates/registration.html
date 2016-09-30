@@ -25,15 +25,15 @@
 
 <p>All fields are required</p>
 
-<form action="registration.html" th:action="@{registration}" th:object="${user}" method="post">
+<form id="passwordForm" action="registration.html" th:action="@{registration}" th:object="${user}" method="post">
 
-    <!-- <input type="hidden" name="id" th:value="*{id}" />  -->
+    <input type="hidden" name="id" th:value="${user?.id}" />
 
     <div>
         <label for="name" >
             Name:
         </label>
-        <input type="text" name="name" id="name" value="" />
+        <input type="text" name="name" id="name" value="" th:value="${user?.name}"/>
         <ul class="error">
         </ul>
     </div>
@@ -42,16 +42,32 @@
         <label for="email" >
             Email:
         </label>
-        <input type="text" name="email" id="email" value="" />
+        <input type="text" name="email" id="email" value="" th:value="${user?.email}"/>
         <ul class="error">
         </ul>
     </div>
 
+    <div th:if="${user} != null">
+        <label for="oldPassword">
+            Old Password:
+        </label>
+        <input type="password" name="oldPassword" id="oldPassword" />
+        <ul class="error">
+        </ul>
+    </div>
     <div>
         <label for="password" >
-            Password:
+            New Password:
         </label>
-        <input type="password" name="password" id="password" placeholder="your password..."/>
+        <input type="password" name="password" id="password" />
+        <ul class="error">
+        </ul>
+    </div>
+    <div>
+        <label for="confirmPassword" >
+            Confirm Password:
+        </label>
+        <input type="password" name="confirmPassword" id="confirmPassword" />
         <ul class="error">
         </ul>
     </div>

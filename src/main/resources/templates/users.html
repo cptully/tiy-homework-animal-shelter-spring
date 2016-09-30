@@ -36,9 +36,9 @@
 
     <tr th:each="user : ${users}">
         <td>
-            <a href="registration.html" th:href="@{/editUser(id=${user.id})}" th:text="user.name">Jimmy Snooka</a>
+            <a href="registration.html" th:href="@{/editUser(id=${user.id})}" th:text="${user.name}">Jimmy Snooka</a>
         </td>
-        <td th:text="user.email">
+        <td th:text="${user.email}">
             jSnooka@somwhere.com
         </td>
         <td>

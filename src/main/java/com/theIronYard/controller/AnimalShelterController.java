@@ -208,8 +208,23 @@ public class AnimalShelterController {
         return "registration";
     }
 
+    @RequestMapping(path = "/editUser", method = RequestMethod.GET)
+    public String editUser(Integer id, Model model, HttpSession session){
+
+        model.addAttribute("user", animalService.getUser(id));
+
+       // model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
+
+        return "registration";
+    }
+
     @RequestMapping(path = "/registration", method = RequestMethod.POST)
-    public String registration(@Valid @ModelAttribute(name = "editUser") User editUser, BindingResult bindingResult, Model model, HttpSession session){
+    public String registration(@Valid @ModelAttribute(name = "editUser") User editUser,
+                               BindingResult bindingResult,
+                               @RequestParam(defaultValue = "") String oldPassword,
+                               @RequestParam(defaultValue = "") String confimPassword,
+                               Model model,
+                               HttpSession session){
 
         if(bindingResult.hasErrors()){
 
@@ -218,13 +233,40 @@ public class AnimalShelterController {
             return "users";
         } else {
             try {
-                animalService.saveUser(editUser);
-                return "redirect:/users";
+                if (editUser.getId() != null) {
+                    String savedPassword = animalService.getUser(editUser.getId()).getPassword();
+                    if (PasswordStorage.verifyPassword(oldPassword, savedPassword)) {
+                        if (!PasswordStorage.verifyPassword(editUser.getPassword(), savedPassword)) {
+                            if (editUser.getPassword().equals(confimPassword)) {
+                                animalService.saveUser(editUser);
+                                return "redirect:/list";
+                            } else {
+                                // new and confirm do not match
+                                // set errors
+                                return "redirect:/registration";
+                            }
+                        } else {
+                            // new matches old
+                            // set errors
+                            return "redirect:/registration";
+                        }
+                    } else {
+                        // invalid password
+                        //set errors
+                        return "redirect:/registration";
+                    }
+                } else {
+                    animalService.saveUser(editUser);
+                    return "redirect:/users";
+                }
             } catch (PasswordStorage.CannotPerformOperationException e) {
                 editUser.setPassword("");
                 return "users";
+            } catch (PasswordStorage.InvalidHashException e) {
+                e.printStackTrace();
             }
         }
+        return "users";
     }
 
     @RequestMapping(path = "/deleteUser")

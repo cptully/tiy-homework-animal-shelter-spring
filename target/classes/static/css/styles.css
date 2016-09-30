@@ -126,6 +126,10 @@ textarea {
     margin-right: 2em;
 }
 
+#passwordForm input, label{
+    width: 250px;
+}
+
 form div{
     padding: .5em;
     width: 200px;
