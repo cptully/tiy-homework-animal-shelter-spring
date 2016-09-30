@@ -42,6 +42,10 @@ public class AnimalService {
         return breedRepository.findAll();
     }
 
+    public Breed getBreedById(Integer breedId) {
+        return breedRepository.findOne(breedId);
+    }
+
     public List<Breed> breedList(Integer typeId) {
         return breedRepository.findByTypeId(typeId);
     }
@@ -51,10 +55,11 @@ public class AnimalService {
     }
 
     public Page<Animal> listAnimals(Search search, Pageable pageable) {
-        Page<Animal> animals =  animalRepository.findAll(pageable);
+//        Page<Animal> animals =
 
+        /*
         if ((search.getName() != null ) && (!search.getName().equals(""))) {
-            animals = animalRepository.findByName(search.getName(), pageable);
+            animals = animalRepository.findByName(search.getNameForSearch(), pageable);
         } else if (search.getAnimalId() != null) {
             animals = animalRepository.findById(search.getAnimalId(), pageable);
         } else if (search.getBreedId() != null) {
@@ -62,7 +67,8 @@ public class AnimalService {
         } else if (search.getTypeId() != null) {
             animals = animalRepository.findByTypeId(search.getTypeId(), pageable);
         }
-        return animals;
+*/
+        return animalRepository.search(search.getNameForSearch(), search.getBreedId(), search.getTypeId(), search.getAnimalId(), pageable);
     }
 
     public Animal getOne(Integer id) {
@@ -109,9 +115,11 @@ public class AnimalService {
         return animalRepository.findOne(animalId);
     }
 
-    public void addNote(Integer animalId, LocalDate date, String content) {
-        Note note = new Note(animalId, content, date);
-        noteRepository.save(note);
+    public void addNote(Integer animalId, String content) {
+        Animal animal =animalRepository.getOne(animalId);
+        Note note = new Note(content);
+        animal.addNote(note);
+        animalRepository.save(animal);
     }
 
     public User getUser(Integer id) {

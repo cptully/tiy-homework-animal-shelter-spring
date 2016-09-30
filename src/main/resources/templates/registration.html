@@ -16,10 +16,10 @@
         <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
         <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
         <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
-        <li><a th:href="@{/login}" href="login.html" >Login</a></li>
-        <li><a th:href="@{/logout}" href="login.html" >Logout</a></li>
-        <li><a th:href="@{/registration}" href="registration.html" >Add a User</a></li>
-        <li><a th:href="@{/users}" href="users.html" >List Users</a></li>
+        <li th:if="${user} == null"><a href="login.html" th:href="@{login}">Login</a></li>
+        <li th:if="${user} != null"><a href="login.html" th:href="@{logout}">Logout</a></li>
+        <li><a href="registration.html" th:href="@{registration}">Add a User</a></li>
+        <li><a href="users.html" th:href="@{users}">List Users</a></li>
     </ul>
 </nav>
 
@@ -34,8 +34,7 @@
             Name:
         </label>
         <input type="text" name="name" id="name" value="" th:value="${user?.name}"/>
-        <ul class="error">
-        </ul>
+        <ul class="error"><li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li></ul>
     </div>
 
     <div>
@@ -43,8 +42,7 @@
             Email:
         </label>
         <input type="text" name="email" id="email" value="" th:value="${user?.email}"/>
-        <ul class="error">
-        </ul>
+        <ul class="error"><li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li></ul>
     </div>
 
     <div th:if="${user} != null">
@@ -52,24 +50,21 @@
             Old Password:
         </label>
         <input type="password" name="oldPassword" id="oldPassword" />
-        <ul class="error">
-        </ul>
+        <ul class="error"><li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li></ul>
     </div>
     <div>
         <label for="password" >
             New Password:
         </label>
         <input type="password" name="password" id="password" />
-        <ul class="error">
-        </ul>
+        <ul class="error"><li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li></ul>
     </div>
     <div>
         <label for="confirmPassword" >
             Confirm Password:
         </label>
         <input type="password" name="confirmPassword" id="confirmPassword" />
-        <ul class="error">
-        </ul>
+        <ul class="error"><li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li></ul>
     </div>
     <div>
 

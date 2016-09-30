@@ -20,7 +20,7 @@ ul{
 
 }
 
-li {
+nav li {
     display: inline;
     padding: 5px;
     border: 2px solid #000000;
@@ -184,4 +184,12 @@ form div{
     color: #ffffff;
     border-radius: 5px 5px;
     background-color: bisque;
+}
+
+.error{
+    color:red;
+    font-size: x-small;
+    margin-left:90px;
+    list-style: disc;
+    background-image: none;
 }
