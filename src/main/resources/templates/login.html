@@ -1,31 +1,30 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<!--/*@thymesVar id="login" type="com.theironyard.bean.Login"*/-->
 
 <head>
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../static/css/styles.css" />
+    <link th:href="@{css/styles.css}" href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <h1>Animal Shelter</h1>
 
 <nav>
-    <ul class="nav">
-        <!--/*@thymesVar id="user" type=""*/-->
+    <ul>
         <li><a href="list.html" th:href="@{/}">List Animals</a></li>
-        <li th:if="${user}"><a th:href="@{/addAnimal}" href="addAnimal.html" >Add/Edit Animal</a></li>
-        <li th:if="${user}"><a th:href="@{/logout}" href="login.html" >Logout</a></li>
-        <li th:unless="${user}"><a th:href="@{/login}" href="login.html" >Login</a></li>
         <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
         <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
         <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+        <li><a th:href="@{login}" href="login.html" >Login</a></li>
+        <li><a th:href="@{logout}" href="login.html" >Logout</a></li>
+        <li><a th:href="@{registration}" href="registration.html" >Add a User</a></li>
+        <li><a th:href="@{users}" href="users.html" >List Users</a></li>
     </ul>
 </nav>
 
 <h2>Login</h2>
 
-<form action="list.html" th:action="@{/login}" th:object="${login}" method="post">
+<form action="login.html" th:action="@{/login}" th:object="${login}" method="post">
     <p th:if="*{loginFailed}" class="error" >Login Failed!!!</p>
 
     <div>
@@ -33,7 +32,7 @@
             Email:
         </label>
         <input type="email" name="email" id="email" value="" th:value="*{email}" />
-        <ul class="error"><li th:each="err : ${#fields.errors('email')}" >Error!</li></ul>
+        <!--<ul class="error"><li th:each="err : ${#fields.errors('email')}" >Error!</li></ul>-->
     </div>
 
     <div>
@@ -41,10 +40,13 @@
             Password:
         </label>
         <input type="password" name="password" id="password" value="" />
-        <ul class="error"><li th:each="err : ${#fields.errors('password')}" >Error!</li></ul>
+        <!--<ul class="error"><li th:each="err : ${#fields.errors('password')}" >Error!</li></ul>-->
     </div>
     <div>
          <button>Login!</button>
+    </div>
+    <div>
+        <a href="registration.html" th:href="@{registration}">Register a new account</a>
     </div>
 </form>
 

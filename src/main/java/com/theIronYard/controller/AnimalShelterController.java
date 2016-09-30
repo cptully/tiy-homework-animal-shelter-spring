@@ -1,16 +1,11 @@
 package com.theIronYard.controller;
 
+import com.theIronYard.bean.Login;
 import com.theIronYard.bean.Search;
 import com.theIronYard.entity.Animal;
 import com.theIronYard.entity.Breed;
 import com.theIronYard.entity.Type;
-import com.theIronYard.service.AnimalService;
-import com.theIronYard.bean.Login;
-import com.theIronYard.entity.*;
-import com.theIronYard.repository.AnimalRepository;
-import com.theIronYard.repository.BreedRepository;
-import com.theIronYard.repository.NoteRepository;
-import com.theIronYard.repository.TypeRepository;
+import com.theIronYard.entity.User;
 import com.theIronYard.service.AnimalService;
 import com.theIronYard.utility.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,7 +163,7 @@ public class AnimalShelterController {
 
         model.addAttribute("login", login);
 
-        return "loginForm";
+        return "login";
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
@@ -180,7 +175,7 @@ public class AnimalShelterController {
             session.setAttribute("userId", user.getId());
             return "redirect:/";
         } else {
-            return "loginForm";
+            return "login";
         }
     }
 
@@ -190,8 +185,8 @@ public class AnimalShelterController {
         return "redirect:/";
     }
 
-    @RequestMapping(path = "/listUsers")
-    public String listUsers(Model model, HttpSession session){
+    @RequestMapping(path = "/users")
+    public String users(Model model, HttpSession session){
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
         }
@@ -200,42 +195,34 @@ public class AnimalShelterController {
 
         model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
 
-        return "userList";
+        return "users";
     }
 
-    @RequestMapping(path = "/editUser", method = RequestMethod.GET)
-    public String userForm(Integer id, Model model, HttpSession session){
-
-        if(session.getAttribute("userId") == null){
-            return "redirect:/login";
-        }
+    @RequestMapping(path = "/registration", method = RequestMethod.GET)
+    public String registration(Integer id, Model model, HttpSession session){
 
         model.addAttribute("editUser", animalService.getUser(id));
 
         model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
 
-        return "userForm";
+        return "registration";
     }
 
-    @RequestMapping(path = "/editUser", method = RequestMethod.POST)
-    public String editUser(@Valid @ModelAttribute(name = "editUser") User editUser, BindingResult bindingResult, Model model, HttpSession session){
-
-        if(session.getAttribute("userId") == null){
-            return "redirect:/login";
-        }
+    @RequestMapping(path = "/registration", method = RequestMethod.POST)
+    public String registration(@Valid @ModelAttribute(name = "editUser") User editUser, BindingResult bindingResult, Model model, HttpSession session){
 
         if(bindingResult.hasErrors()){
 
             model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
 
-            return "userForm";
+            return "users";
         } else {
             try {
                 animalService.saveUser(editUser);
-                return "redirect:/listUsers";
+                return "redirect:/users";
             } catch (PasswordStorage.CannotPerformOperationException e) {
                 editUser.setPassword("");
-                return "userForm";
+                return "users";
             }
         }
     }
@@ -249,6 +236,6 @@ public class AnimalShelterController {
 
         animalService.deleteUser(id);
 
-        return "redirect:/listUsers";
+        return "redirect:/users";
     }
 }

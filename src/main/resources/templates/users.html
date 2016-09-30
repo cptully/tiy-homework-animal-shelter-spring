@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="user" type="com.theIronYard.entity.User"*/-->
+<!--/*@thymesVar id="users" type="java.util.ArrayList<User>"*/-->
+
 <head>
     <title>User List</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../static/css/styles.css" />
+    <link th:href="@{css/styles.css}" href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
 
 </head>
 <body>
@@ -10,21 +13,19 @@
 
 <nav>
     <ul class="nav">
-        <!--/*@thymesVar id="user" type=""*/-->
         <li><a href="list.html" th:href="@{/}">List Animals</a></li>
-        <li th:if="${user}"><a th:href="@{/listUsers}" href="users.html" >List Users</a></li>
-        <li th:if="${user}"><a th:href="@{/logout}" href="login.html" >Logout</a></li>
-        <li th:unless="${user}"><a th:href="@{/login}" href="login.html" >Login</a></li>
+        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+        <li><a th:href="@{/login}" href="login.html" >Login</a></li>
+        <li><a th:href="@{/logout}" href="login.html" >Logout</a></li>
+        <li><a th:href="@{/registration}" href="registration.html" >Add a User</a></li>
+        <li><a th:href="@{/users}" href="users.html" >List Users</a></li>
     </ul>
 </nav>
 <!--/* greeting */-->
-<div class="greeting" th:if="${user}">user</div>
 
-<h2 th:text="#{users.list}">List Users</h2>
-
-<ul class="nav">
-    <li th:if="${user}"><a th:href="@{/editUser}" href="registration.html" >Add a User</a></li>
-</ul>
+<h2>List Users</h2>
 
 <table>
     <tr>
@@ -33,16 +34,17 @@
         <th></th>
     </tr>
 
-    <tr th:each="usr : ${users}">
+    <tr th:each="user : ${users}">
         <td>
-            <a href="registration.html" th:href="@{/editUser(id=${usr.id})}" >Jimmy Snooka</a>
+            <a href="registration.html" th:href="@{/editUser(id=${user.id})}" th:text="user.name">Jimmy Snooka</a>
         </td>
-        <td>
+        <td th:text="user.email">
             jSnooka@somwhere.com
         </td>
         <td>
-            <a th:unless="${user.id eq usr.id}" href="users.html" th:href="@{/deleteUser(id=${usr.id})}">
-                <img src="../static/images/delete.jpeg" th:src="@{/images/delete.png}" alt="Delete" th:alt="#{notes.delete}" /></a>
+            <a href="users.html" th:href="@{/deleteUser(id=${user.id})}">
+                <img class="delete-btn" th:src="@{images/delete.jpeg}" src="../static/images/delete.jpeg" alt="Delete" />
+            </a>
         </td>
     </tr>
 </table>

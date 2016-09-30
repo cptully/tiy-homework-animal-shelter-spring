@@ -1,5 +1,6 @@
 package com.theIronYard.entity;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -17,16 +18,17 @@ public class User {
     private Integer id;
 
     @NotBlank
-    @Length(max = 25)
+    @Length(max = 255)
     private String password;
 
     @NotBlank
-    @Length(max = 40)
+    @Length(max = 255)
     @Column(unique = true)
+    @Email
     private String email;
 
     @NotBlank
-    @Length(max = 40)
+    @Length(max = 255)
     private String name;
 
     public User(){}

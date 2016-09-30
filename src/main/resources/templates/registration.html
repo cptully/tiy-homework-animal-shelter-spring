@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="user" type="com.theIronYard.entity.User"*/-->
+<!--/*@thymesVar id="editUser" type="com.theIronYard.entity.User"*/-->
 <head>
     <title>User Form</title>
-    <!--/*@thymesVar id="user" type="com.theIronYard.entity.User"*/-->
-    <!--/*@thymesVar id="editUser" type="com.theIronYard.entity.User"*/-->
-    <link rel="stylesheet" th:href="@{/css/styles.css}" href="../static/css/styles.css" />
+    <link th:href="@{css/styles.css}" href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
 
 </head>
 <body>
 <h1>Animal Shelter</h1>
 
 <nav>
-    <ul class="nav">
-        <!--/*@thymesVar id="user" type=""*/-->
+    <ul>
         <li><a href="list.html" th:href="@{/}">List Animals</a></li>
-        <li th:if="${user}"><a th:href="@{/listUsers}" href="users.html" >List Users</a></li>
-        <li th:if="${user}"><a th:href="@{/logout}" href="login.html" >Logout</a></li>
-        <li th:unless="${user}"><a th:href="@{/login}" href="login.html" >Login</a></li>
+        <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
+        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
+        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+        <li><a th:href="@{/login}" href="login.html" >Login</a></li>
+        <li><a th:href="@{/logout}" href="login.html" >Logout</a></li>
+        <li><a th:href="@{/registration}" href="registration.html" >Add a User</a></li>
+        <li><a th:href="@{/users}" href="users.html" >List Users</a></li>
     </ul>
 </nav>
-<!--/* greeting */-->
-
-<div class="greeting" th:if="${user}" >user</div>
 
 <p>All fields are required</p>
 
-<form action="registration.html" th:action="@{/editUser}" th:object="${editUser}" method="post">
+<form action="registration.html" th:action="@{registration}" th:object="${user}" method="post">
 
-    <input type="hidden" name="id" value="" th:value="*{id}" />
+    <!-- <input type="hidden" name="id" th:value="*{id}" />  -->
 
     <div>
         <label for="name" >
             Name:
         </label>
         <input type="text" name="name" id="name" value="" />
-        <ul class="error"><li th:each="err : ${#fields.errors('name')}" th:text="${err}">Error!</li></ul>
+        <ul class="error">
+        </ul>
     </div>
 
     <div>
@@ -42,15 +43,19 @@
             Email:
         </label>
         <input type="text" name="email" id="email" value="" />
-        <ul class="error"><li th:each="err : ${#fields.errors('email')}" th:text="${err}">Error!</li></ul>
+        <ul class="error">
+        </ul>
     </div>
 
     <div>
         <label for="password" >
             Password:
         </label>
-        <input type="password" name="password" id="password" value="" th:value="*{password}"/>
-        <ul class="error"><li th:each="err : ${#fields.errors('password')}" th:text="${err}">Error!</li></ul>
+        <input type="password" name="password" id="password" placeholder="your password..."/>
+        <ul class="error">
+        </ul>
+    </div>
+    <div>
 
     </div>
 

@@ -35,6 +35,10 @@ nav {
     display: block;
 }
 
+p {
+    padding: 5px;
+}
+
 nav a {
     font-family: Futura, Tahoma, sans-serif;
     color: #ffffff;
@@ -125,7 +129,6 @@ textarea {
 form div{
     padding: .5em;
     width: 200px;
-    /*margin-right: 2em;*/
 }
 
 #mainImage {
