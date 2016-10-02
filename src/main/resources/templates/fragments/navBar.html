@@ -10,8 +10,8 @@
         <ul>
             <li><a href="list.html" th:href="@{/}">List Animals</a></li>
             <li th:if="${user} != null"><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
-            <li th:if="${user} ? ${user.role.id} == 1 : false"><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
-            <li th:if="${user} ? ${user.role.id} == 1 : false"><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+            <li th:if="${user?.role?.id} == 1"><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
+            <li th:if="${user?.role?.id} == 1"><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
             <li th:if="${user} == null"><a href="login.html" th:href="@{login}">Login</a></li>
             <li th:if="${user} != null"><a href="login.html" th:href="@{logout}">Logout</a></li>
             <li><a href="registration.html" th:href="@{registration}" th:text="${user} == null ? 'Register' : 'Add a User'">Add a User</a></li>
