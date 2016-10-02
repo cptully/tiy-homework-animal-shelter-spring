@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!--/*@thymesVar id="user" type="com.theIronYard.entity.User"*/-->
 <!--/*@thymesVar id="editUser" type="com.theIronYard.entity.User"*/-->
+<!--/*@thymesVar id="bindingResult" type="org.springframework.validation.BindingResult"*/-->
 <head>
     <title>User Form</title>
     <link th:href="@{css/styles.css}" href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
@@ -18,14 +19,15 @@
         <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
         <li th:if="${user} == null"><a href="login.html" th:href="@{login}">Login</a></li>
         <li th:if="${user} != null"><a href="login.html" th:href="@{logout}">Logout</a></li>
-        <li><a href="registration.html" th:href="@{registration}">Add a User</a></li>
+        <li><a href="registration.html" th:href="@{registration}" >Add a User</a></li>
+        <li><a href="registration.html" th:href="@{registration}" >Edit User Profile</a></li>
         <li><a href="users.html" th:href="@{users}">List Users</a></li>
     </ul>
 </nav>
 
 <p>All fields are required</p>
 
-<form id="passwordForm" action="registration.html" th:action="@{registration}" th:object="${user}" method="post">
+<form id="passwordForm" action="registration.html" th:object="${user}" th:action="${user.id} == null ? @{registration} : @{editUser}" method="post">
 
     <input type="hidden" name="id" th:value="${user?.id}" />
 
@@ -33,7 +35,7 @@
         <label for="name" >
             Name:
         </label>
-        <input type="text" name="name" id="name" value="" th:value="${user?.name}"/>
+        <input type="text" name="name" id="name" value="" th:value="${user?.name}" th:errorclass="error" />
         <ul class="error"><li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li></ul>
     </div>
 
@@ -45,7 +47,7 @@
         <ul class="error"><li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li></ul>
     </div>
 
-    <div th:if="${user} != null">
+    <div th:if="${user.id} != null">
         <label for="oldPassword">
             Old Password:
         </label>

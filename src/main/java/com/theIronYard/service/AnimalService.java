@@ -6,6 +6,7 @@ import com.theIronYard.entity.*;
 import com.theIronYard.repository.*;
 import com.theIronYard.utility.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,9 @@ public class AnimalService {
 
     @Autowired
     NoteRepository noteRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     public List<Animal> listAnimals(){
         return animalRepository.findAll();
@@ -156,7 +160,10 @@ public class AnimalService {
     public void createDefaultAdminUser() {
         if(userRepository.count() == 0){
             try {
-                userRepository.save(new User("Default Administrator", "admin@admin.com", PasswordStorage.createHash("password")));
+                User defaultAdmin = new User("Default Administrator", "admin@admin.com", PasswordStorage.createHash("password"));
+                Role role = roleRepository.findByNameEquals("administrator");
+                defaultAdmin.setRole(role);
+                userRepository.save(defaultAdmin);
             } catch (PasswordStorage.CannotPerformOperationException e) {
                 e.printStackTrace();
             }
@@ -165,6 +172,11 @@ public class AnimalService {
 
     public List<User> listUsers() {
         return userRepository.findAll();
+    }
+
+    public List<User> listUsers(Integer id) {
+        User user = userRepository.findOne(id);
+        return userRepository.findAll(Example.of(user));
     }
 
     public void saveUser(User user) throws PasswordStorage.CannotPerformOperationException {
@@ -178,6 +190,8 @@ public class AnimalService {
         } else {
             user.setPassword(PasswordStorage.createHash(user.getPassword()));
         }
+        Role role = roleRepository.findByNameEquals("user");
+        user.setRole(role);
         userRepository.save(user);
     }
 

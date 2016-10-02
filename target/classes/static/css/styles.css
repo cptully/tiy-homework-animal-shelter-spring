@@ -186,6 +186,29 @@ form div{
     background-color: bisque;
 }
 
+ul.error{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.error li{
+    color: darkred;
+    margin: 0.25em 0;
+    padding: 0.25em 0;
+    font-size: small;
+}
+
+input.error, select.error{
+    -webkit-box-shadow: 0 0 15px 0 rgba(255,0,0,0.5);
+    -moz-box-shadow: 0 0 15px 0 rgba(255,0,0,0.5);
+    box-shadow: 0 0 15px 0 rgba(255,0,0,0.5);
+}
+
+input, select{
+    margin: 0.25em 0;
+}
+
 .error{
     color:red;
     font-size: x-small;

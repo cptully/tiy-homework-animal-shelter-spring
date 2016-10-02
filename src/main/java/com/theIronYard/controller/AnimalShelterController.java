@@ -127,8 +127,11 @@ public class AnimalShelterController {
     @RequestMapping(path = "/breed", method = RequestMethod.GET)
     public String breed(Model model, HttpSession session) {
         // the user must be logged in
-        if(session.getAttribute("userId") == null){
+        if ((session.getAttribute("userId") == null)) {
             return "redirect:/login";
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+            // user must have admin rights for this page
+            return "redirect:/";
         }
 
         List<Breed> breeds =  animalService.breedList();
@@ -147,7 +150,11 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+            // user must have admin rights for this page
+            return "redirect:/";
         }
+
 
         Boolean success = animalService.deleteBreed(id);
 
@@ -166,7 +173,11 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+            // user must have admin rights for this page
+            return "redirect:/";
         }
+
 
         animalService.addBreed(breedName, typeId);
 
@@ -181,7 +192,11 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+            // user must have admin rights for this page
+            return "redirect:/";
         }
+
 
         List<Type> types =  animalService.typeList();
         model.addAttribute("types", types);
@@ -197,7 +212,11 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+            // user must have admin rights for this page
+            return "redirect:/";
         }
+
 
         animalService.addType(typeName);
 
@@ -212,7 +231,11 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+            // user must have admin rights for this page
+            return "redirect:/";
         }
+
 
         animalService.deleteType(id);
 
@@ -320,91 +343,130 @@ public class AnimalShelterController {
     public String users(Model model, HttpSession session){
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+            // user must have admin rights for this page
+            model.addAttribute("users", animalService.listUsers((Integer)session.getAttribute("userId")));
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 1){
+            // admin user can edit all users
+            model.addAttribute("users", animalService.listUsers());
         }
-
-        model.addAttribute("users", animalService.listUsers());
 
         model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
 
         return "users";
     }
 
+
+    // TODO: 10/1/16 fix rights logic on this and following methods
     @RequestMapping(path = "/editUser", method = RequestMethod.GET)
     public String userForm(Integer id, Model model, HttpSession session){
 
-        if(session.getAttribute("userId") == null){
+        if(session.getAttribute("userId") == null) {
             return "redirect:/login";
+        } else if ((animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2) &&
+                (session.getAttribute("userId") == id)) {
+            // non-admin user can edit own profile
+            model.addAttribute("user", animalService.getUserOrNull(id));
+            return "registration";
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 1){
+            // user must have admin rights to edit other people's profiles
+            model.addAttribute("user", animalService.getUserOrNull(id));
+            return "registration";
         }
 
-        model.addAttribute("editUser", animalService.getUser(id));
-
-        model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
-
-        return "registration";
+        return "redirect:/";
     }
 
     @RequestMapping(path = "/editUser", method = RequestMethod.POST)
-    public String editUser(@Valid @ModelAttribute(name = "editUser") User editUser,
+    public String editUser(@Valid @ModelAttribute(name = "user") User user,
+                           @RequestParam(defaultValue = "") String oldPassword,
+                           @RequestParam(defaultValue = "") String confirmPassword,
                            BindingResult bindingResult,
                            Model model,
                            HttpSession session){
 
-        model.addAttribute("user", animalService.getUser(editUser.getId()));
+        Integer sessionUserRole = animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId();
+        if(session.getAttribute("userId") == null) {
+            return "redirect:/login";
+        } else if (((sessionUserRole == 2) && (session.getAttribute("userId") == user.getId()))  // user can edit own profile
+                || (sessionUserRole == 1)) {  // only admin can edit other profiles
 
-        return "registration";
+            if (!bindingResult.hasErrors()) {
+
+                try {
+                    if (user.getId() != null) {
+                        String savedPassword = animalService.getUser(user.getId()).getPassword();
+                        if (PasswordStorage.verifyPassword(oldPassword, savedPassword)) {
+                            if (!PasswordStorage.verifyPassword(user.getPassword(), savedPassword)) {
+                                if (user.getPassword().equals(confirmPassword)) {
+                                    animalService.saveUser(user);
+                                    return "redirect:/users";
+                                } else {
+                                    // set errors
+                                    FieldError fieldError = new FieldError("user", "password", user.getPassword(), false, new String[]{"Invalid.user.password"}, (String[]) null, "Passwords do not match");
+                                    bindingResult.addError(fieldError);
+                                }
+                            } else {
+                                // new matches old
+                                FieldError fieldError = new FieldError("user", "password", user.getPassword(), false, new String[]{"Invalid.user.password"}, (String[]) null, "New password cannot match old password");
+                                bindingResult.addError(fieldError);
+                            }
+                        } else {
+                            // invalid password
+                            FieldError fieldError = new FieldError("user", "password", user.getPassword(), false, new String[]{"Invalid.user.password"}, (String[]) null, "Username / password combination incorrect");
+                            bindingResult.addError(fieldError);
+                        }
+                    } else {
+                        animalService.saveUser(user);
+                        return "redirect:/users";
+                    }
+                } catch (PasswordStorage.CannotPerformOperationException e) {
+                    user.setPassword("");
+                } catch (PasswordStorage.InvalidHashException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (bindingResult.hasErrors()) {
+
+                model.addAttribute("user", user);
+                model.addAttribute("bindingResult", bindingResult);
+            }
+
+            return "registration";
+        }
+        return "redirect:/login";
     }
 
     @RequestMapping(path = "/registration", method = RequestMethod.GET)
-    public String registration(Integer id, Model model, HttpSession session){
+    public String registration(User user,
+                               Model model,
+                               HttpSession session){
 
-        model.addAttribute("editUser", animalService.getUser(id));
-
-        model.addAttribute("user", animalService.getUserOrNull((Integer)session.getAttribute("userId")));
+        model.addAttribute("user", user);
 
         return "registration";
     }
 
     @RequestMapping(path = "/registration", method = RequestMethod.POST)
     public String registration(@Valid User user,
+//                               @RequestParam(defaultValue = "") String oldPassword,
+                               @RequestParam(defaultValue = "") String confirmPassword,
                                BindingResult bindingResult,
-                               @RequestParam(defaultValue = "") String oldPassword,
-                               @RequestParam(defaultValue = "") String confimPassword,
                                Model model,
                                HttpSession session){
         if(!bindingResult.hasErrors()){
-
             try {
-                if (user.getId() != null) {
-                    String savedPassword = animalService.getUser(user.getId()).getPassword();
-                    if (PasswordStorage.verifyPassword(oldPassword, savedPassword)) {
-                        if (!PasswordStorage.verifyPassword(user.getPassword(), savedPassword)) {
-                            if (user.getPassword().equals(confimPassword)) {
-                                animalService.saveUser(user);
-                                return "redirect:/list";
-                            } else {
-                                // set errors
-                                FieldError fieldError = new FieldError("user", "password", user.getPassword(), false, new String[]{"Invalid.user.password"}, (String[])null, "Passwords do not match");
-                                bindingResult.addError(fieldError);
-                            }
-                        } else {
-                            // new matches old
-                            FieldError fieldError = new FieldError("user", "password", user.getPassword(), false, new String[]{"Invalid.user.password"}, (String[])null, "New password cannot match old password");
-                            bindingResult.addError(fieldError);
-                        }
-                    } else {
-                        // invalid password
-                        FieldError fieldError = new FieldError("user", "password", user.getPassword(), false, new String[]{"Invalid.user.password"}, (String[])null, "Username / password combination incorrect");
-                        bindingResult.addError(fieldError);
-                    }
-                } else {
+                if (user.getPassword().equals(confirmPassword)) {
                     animalService.saveUser(user);
-                    return "redirect:/users";
+                    return "redirect:/";
+                } else {
+                    // set errors
+                    FieldError fieldError = new FieldError("user", "password", user.getPassword(), false, new String[]{"Invalid.user.password"}, (String[])null, "Passwords do not match");
+                    bindingResult.addError(fieldError);
                 }
             } catch (PasswordStorage.CannotPerformOperationException e) {
                 user.setPassword("");
-//                return "resitratino";
-            } catch (PasswordStorage.InvalidHashException e) {
-                e.printStackTrace();
             }
         }
 
@@ -412,7 +474,6 @@ public class AnimalShelterController {
 
             model.addAttribute("user", user);
             model.addAttribute("bindingResult", bindingResult);
-//            return "registration";
         }
         return "registration";
     }
@@ -420,12 +481,14 @@ public class AnimalShelterController {
     @RequestMapping(path = "/deleteUser")
     public String deleteUser(Integer id, HttpSession session){
 
-        if(session.getAttribute("userId") == null){
+        Integer sessionUserRole = animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId();
+        if(session.getAttribute("userId") == null) {
             return "redirect:/login";
+        } else if (((sessionUserRole == 2) && (session.getAttribute("userId") == id))  // user can edit own profile
+                || (sessionUserRole == 1)) {  // only admin can edit other profiles
+
+            animalService.deleteUser(id);
         }
-
-        animalService.deleteUser(id);
-
         return "redirect:/users";
     }
 }

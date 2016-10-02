@@ -18,7 +18,7 @@ public class User {
     private Integer id;
 
     @NotBlank
-    @Length(max = 255)
+    @Length(min = 8, max = 100)
     private String password;
 
     @NotBlank
@@ -30,6 +30,9 @@ public class User {
     @NotBlank
     @Length(max = 255)
     private String name;
+
+    @ManyToOne
+    private Role role;
 
     public User(){}
 
@@ -71,5 +74,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
