@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--/*@thymesVar id="user" type="com.theIronYard.entity.User"*/-->
+<!--/*@thymesVar id="role" type="com.theIronYard.entity.Role"*/-->
+
+<head>
+</head>
+<body>
+    <nav th:fragment="navBar">
+        <ul>
+            <li><a href="list.html" th:href="@{/}">List Animals</a></li>
+            <li th:if="${user} != null"><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
+            <li th:if="${user} ? ${user.role.id} == 1 : false"><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
+            <li th:if="${user} ? ${user.role.id} == 1 : false"><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
+            <li th:if="${user} == null"><a href="login.html" th:href="@{login}">Login</a></li>
+            <li th:if="${user} != null"><a href="login.html" th:href="@{logout}">Logout</a></li>
+            <li><a href="registration.html" th:href="@{registration}" th:text="${user} == null ? 'Register' : 'Add a User'">Add a User</a></li>
+            <li th:if="${user} != null"><a href="users.html" th:href="@{users}">List Users</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

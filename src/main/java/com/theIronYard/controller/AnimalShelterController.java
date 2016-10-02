@@ -27,6 +27,9 @@ import java.util.List;
 @Controller
 public class AnimalShelterController {
 
+    private final Integer ADMIN = 1;
+    private final Integer USER = 2;
+    
     @Autowired
     AnimalService animalService;
 
@@ -129,7 +132,7 @@ public class AnimalShelterController {
         // the user must be logged in
         if ((session.getAttribute("userId") == null)) {
             return "redirect:/login";
-        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(USER)){
             // user must have admin rights for this page
             return "redirect:/";
         }
@@ -150,7 +153,7 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
-        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(USER)){
             // user must have admin rights for this page
             return "redirect:/";
         }
@@ -173,7 +176,7 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
-        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(USER)){
             // user must have admin rights for this page
             return "redirect:/";
         }
@@ -192,7 +195,7 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
-        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(USER)){
             // user must have admin rights for this page
             return "redirect:/";
         }
@@ -212,7 +215,7 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
-        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(USER)){
             // user must have admin rights for this page
             return "redirect:/";
         }
@@ -231,7 +234,7 @@ public class AnimalShelterController {
         // the user must be logged in
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
-        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(USER)){
             // user must have admin rights for this page
             return "redirect:/";
         }
@@ -343,10 +346,10 @@ public class AnimalShelterController {
     public String users(Model model, HttpSession session){
         if(session.getAttribute("userId") == null){
             return "redirect:/login";
-        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2){
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(USER)){
             // user must have admin rights for this page
             model.addAttribute("users", animalService.listUsers((Integer)session.getAttribute("userId")));
-        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 1){
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(ADMIN)){
             // admin user can edit all users
             model.addAttribute("users", animalService.listUsers());
         }
@@ -363,12 +366,12 @@ public class AnimalShelterController {
 
         if(session.getAttribute("userId") == null) {
             return "redirect:/login";
-        } else if ((animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 2) &&
+        } else if ((animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(USER)) &&
                 (session.getAttribute("userId") == id)) {
             // non-admin user can edit own profile
             model.addAttribute("user", animalService.getUserOrNull(id));
             return "registration";
-        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId() == 1){
+        } else if (animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId().equals(ADMIN)){
             // user must have admin rights to edit other people's profiles
             model.addAttribute("user", animalService.getUserOrNull(id));
             return "registration";
@@ -388,8 +391,8 @@ public class AnimalShelterController {
         Integer sessionUserRole = animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId();
         if(session.getAttribute("userId") == null) {
             return "redirect:/login";
-        } else if (((sessionUserRole == 2) && (session.getAttribute("userId") == user.getId()))  // user can edit own profile
-                || (sessionUserRole == 1)) {  // only admin can edit other profiles
+        } else if (((sessionUserRole.equals(USER)) && (session.getAttribute("userId") == user.getId()))  // user can edit own profile
+                || (sessionUserRole.equals(ADMIN))) {  // only admin can edit other profiles
 
             if (!bindingResult.hasErrors()) {
 
@@ -484,8 +487,8 @@ public class AnimalShelterController {
         Integer sessionUserRole = animalService.getUser((Integer)session.getAttribute("userId")).getRole().getId();
         if(session.getAttribute("userId") == null) {
             return "redirect:/login";
-        } else if (((sessionUserRole == 2) && (session.getAttribute("userId") == id))  // user can edit own profile
-                || (sessionUserRole == 1)) {  // only admin can edit other profiles
+        } else if (((sessionUserRole.equals(USER)) && (session.getAttribute("userId") == id))  // user can edit own profile
+                || (sessionUserRole.equals(ADMIN))) {  // only admin can edit other profiles
 
             animalService.deleteUser(id);
         }

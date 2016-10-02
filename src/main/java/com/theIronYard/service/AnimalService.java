@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -59,19 +58,6 @@ public class AnimalService {
     }
 
     public Page<Animal> listAnimals(Search search, Pageable pageable) {
-//        Page<Animal> animals =
-
-        /*
-        if ((search.getName() != null ) && (!search.getName().equals(""))) {
-            animals = animalRepository.findByName(search.getNameForSearch(), pageable);
-        } else if (search.getAnimalId() != null) {
-            animals = animalRepository.findById(search.getAnimalId(), pageable);
-        } else if (search.getBreedId() != null) {
-            animals = animalRepository.findByBreedId(search.getBreedId(), pageable);
-        } else if (search.getTypeId() != null) {
-            animals = animalRepository.findByTypeId(search.getTypeId(), pageable);
-        }
-*/
         return animalRepository.search(search.getNameForSearch(), search.getBreedId(), search.getTypeId(), search.getAnimalId(), pageable);
     }
 

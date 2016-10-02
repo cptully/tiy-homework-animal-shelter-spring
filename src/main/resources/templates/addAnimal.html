@@ -13,16 +13,11 @@
 <body>
 <h1>Chris, Dave and Jeff's Animal Shelter</h1>
 
-<nav>
+<nav th:replace="fragments/navBar :: navBar">
     <ul>
         <li><a href="list.html" th:href="@{/}">List Animals</a></li>
         <li><a href="addAnimal.html" th:href="@{addAnimal}">Add an Animal</a></li>
-        <li><a href="type.html" th:href="@{type}">Manage Animal Types</a></li>
-        <li><a href="breed.html" th:href="@{breed}">Manage Animal Breeds</a></li>
-        <li th:if="${user} == null"><a href="login.html" th:href="@{login}">Login</a></li>
-        <li th:if="${user} != null"><a href="login.html" th:href="@{logout}">Logout</a></li>
-        <li><a href="registration.html" th:href="@{registration}">Add a User</a></li>
-        <li><a href="users.html" th:href="@{users}">List Users</a></li>
+
     </ul>
 </nav>
 
